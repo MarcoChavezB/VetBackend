@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Model
 {
     use HasFactory;
+
+    protected $filleable = [
+        "nombre",
+        "apellido",
+        "correo",
+        "telefono1",
+        "telefono2",
+        "contra",
+        "tipo_usuario",
+    ];
 }
