@@ -15,6 +15,7 @@ class UsuarioController extends Controller
 
 
 // pull a server 
+// cd /var/www/html/VetBackend
 // sudo chown -R ubuntu:ubuntu /var/www/html
 // git pull
 // sudo chown -R www-data:www-data /var/www/html

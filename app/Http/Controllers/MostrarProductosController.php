@@ -13,4 +13,11 @@ class MostrarProductosController extends Controller
             'productos' => $productosVenta
         ]);
     }
+
+    public function getProductoByName($name){
+        $producto = Producto::where('nombre', $name)->where('tipo_producto', 'venta')->first();
+        return response()->json([
+            'producto' => $producto
+        ]);
+    }
 }
