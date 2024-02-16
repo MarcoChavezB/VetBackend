@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\MostrarProductosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Animal;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,15 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/getAnimales', function (){
-    return response()->json([
-        'animales' => Animal::all()
-    ]);
-});
+// * Productos 
+Route::get('/productos/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
 
-
-Route::get('/test', function (){
-    return response()->json([
-        'message' => 'Hola mundo'
-    ]);
-});

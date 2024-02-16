@@ -11,9 +11,9 @@ class Producto extends Model
 
     
     protected $filleable = [
-        "nom_producto", "descripcion", "existencias", "precio_venta", 
-        "id_categoria", "id_proveedor", "precio_compra"
+        "nom_producto", "descripcion", "precio_compra", "tipo_producto", 
+        "existencias", "precio_venta", "id_categoria", "imagen"
     ];
 
-    public $table = "productos";
+    public $table = "productos";    
 }
