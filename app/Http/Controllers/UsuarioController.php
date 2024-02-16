@@ -10,7 +10,15 @@ class UsuarioController extends Controller
         $data = $request->all();
         
         response()->json([
-            'data' => $data
+            'data' => $data,
+            'message' => 'Registro exitoso'
         ]);
     }
 }
+
+
+// pull a server 
+// sudo chown -R www-data:www-data /var/www/html
+// git pull
+// sudo chown -R ubuntu:ubuntu /var/www/html
+// sudo systemctl restart apache2
