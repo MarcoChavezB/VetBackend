@@ -15,7 +15,7 @@ class MostrarProductosController extends Controller
     }
 
     public function getProductoByName($name){
-        $producto = Producto::where('nombre', $name)->where('tipo_producto', 'venta')->first();
+        $producto = Producto::where('nombre', 'like', '%'.$name.'%')->where('tipo_producto', 'venta')->get(); 
         return response()->json([
             'producto' => $producto
         ]);
