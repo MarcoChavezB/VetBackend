@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Animal;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,7 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/getAnimales', function (){
+    return response()->json([
+        'animales' => Animal::all()
+    ]);
+});
 
-Route::get('/test', function () {
-    return response()->json(['message' => 'Hello World!'], 200);
+
+Route::get('/test', function (){
+    return response()->json([
+        'message' => 'Hola mundo'
+    ]);
 });
