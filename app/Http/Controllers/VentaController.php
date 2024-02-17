@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PorcentajeCrecimientoVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,12 @@ class VentaController extends Controller
 
         return response()->json([
             'ventas' => $resultado
+        ]);
+    }
+    public function getPorcentajeVentas(){
+        $porcentaje = PorcentajeCrecimientoVenta::all();
+        return response()->json([
+            'porcentaje' => $porcentaje
         ]);
     }
 }
