@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -15,21 +16,19 @@ class UsuarioController extends Controller
 
 
     public function login(Request $request){
-        // login usando sanctum
-
-        $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->first();
+        // login con JWT 
+        $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->get();
 
         if(!$user){
             return response()->json([
-                'message' => 'No se encontro un usuario con esas credenciales'
+                'message' => 'Usuario no encontrado'
             ]);
         }
 
-        $sanToken = $user->createToken('sanctum_token')->plainTextToken;
-        
+        $jwt = JWT::encode(['id', $user->id], env('JWT_SECRET'),'HS256');
         return response()->json([
-            'message' => 'Usuario logeado',
-            'token' => $sanToken
+            'msg' => 'Se ha logeado correctamente',
+            'jwt' => $jwt
         ]);
     }
 }
