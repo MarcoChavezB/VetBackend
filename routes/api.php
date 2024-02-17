@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VentaController;
@@ -31,3 +32,7 @@ Route::post('/usuario/login', [UsuarioController::class, 'login']);
 
 // * Ventas 
 Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
+
+
+// * Citas 
+Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
