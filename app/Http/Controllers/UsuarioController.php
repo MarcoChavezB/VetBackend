@@ -16,7 +16,7 @@ class UsuarioController extends Controller
             'apellido' => 'required|string|max:255|min:4',
             'correo' => 'required|email|max:100|unique:usuarios',
             'telefono1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
-            'telefono2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
+            'telefono2' => 'regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
             'contra' => 'required|min:4',
         ]);
 
