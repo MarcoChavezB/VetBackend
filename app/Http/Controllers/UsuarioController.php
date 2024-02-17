@@ -27,7 +27,7 @@ class UsuarioController extends Controller
 
         return response()->json([
             'message' => 'Usuario encontrado',
-            'user' => $user
+            'user' => $user->id
         ]);
 
         // $jwt = JWT::encode(['id', $user->id], env('JWT_SECRET'),'HS256');
