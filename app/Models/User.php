@@ -27,6 +27,8 @@ class User extends Authenticatable
         'tipo_usuario',
     ];
 
+    protected $table = 'usuarios';
+
     /**
      * The attributes that should be hidden for serialization.
      *
