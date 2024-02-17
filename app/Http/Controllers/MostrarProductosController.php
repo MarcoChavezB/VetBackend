@@ -13,8 +13,8 @@ class MostrarProductosController extends Controller
 
     public function store(Request $request){
         $data = $request->all();
-         
-        $this->validate($request, [
+
+        $validator = Validator::make($data, [
             'nom_producto' => 'required | min:3 | max:50 | unique:productos,nom_producto',
             'descripcion' => 'required | min:3 | max:255',
             'precio_compra' => 'required | numeric | min:1',
@@ -43,6 +43,14 @@ class MostrarProductosController extends Controller
             'precio_venta.min' => 'El precio de venta debe ser mayor a 0',
             'categoria_producto.required' => 'La categoría del producto es requerida'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'data' => [
+                    'errors' => $validator->errors()
+                ]
+            ], 422);
+        }
 
         // obten el id de la categoria por nombre 
         $categoria = Categoria::where('categoria', $data['categoria_producto'])->first();
