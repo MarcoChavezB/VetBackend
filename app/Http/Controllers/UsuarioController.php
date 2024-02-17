@@ -17,7 +17,7 @@ class UsuarioController extends Controller
 
     public function login(Request $request){
         // login con JWT 
-        $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->get();
+        $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->first();
 
         if(!$user){
             return response()->json([
@@ -27,7 +27,7 @@ class UsuarioController extends Controller
 
         return response()->json([
             'message' => 'Usuario encontrado',
-            'user' => $user
+            'user' => $user->id
         ]);
 
         // $jwt = JWT::encode(['id', $user->id], env('JWT_SECRET'),'HS256');
