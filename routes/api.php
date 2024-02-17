@@ -22,10 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
-Route::post('/login', [UsuarioController::class, 'login'])->name('login');
+Route::any('/authenticate', function (Request $request) {
+    return response()->json(['error' => 'Token inválido'], 401);
+})->name('error');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
+    Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
+    Route::post('/login', [UsuarioController::class, 'login'])->name('login');
+});
+Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::name('productos')->prefix('/productos')->group(function () {
         Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
