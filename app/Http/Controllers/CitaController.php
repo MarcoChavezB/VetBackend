@@ -6,6 +6,7 @@ use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CitaController extends Controller
 {
@@ -36,6 +37,19 @@ class CitaController extends Controller
 
         return response()->json([
             'porcentaje' => $procentaje
+        ]);
+    }
+
+    public function index(){
+        $citas = DB::table('citas')
+            ->select('citas.id', 'clientes.nombre', 'clientes.telefono1', 'citas.fecha_cita', 'citas.estatus', 'animales.raza')
+            ->join('animales', 'animales.id', '=', 'citas.id_mascota')
+            ->join('clientes', 'clientes.id', '=', 'animales.propietario')
+            ->where('citas.estatus', 'pendiente')
+            ->get();
+
+        return response()->json([
+            'citas' => $citas
         ]);
     }
 }
