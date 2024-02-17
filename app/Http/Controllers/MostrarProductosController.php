@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\ProductoVentaNombre;
@@ -111,6 +112,14 @@ class MostrarProductosController extends Controller
 
         return response()->json([
             'productos' => $resultados
+        ]);
+    }
+
+    public function getCategorias(){
+        $categorias = Categoria::all();
+
+        return response()->json([
+            'categorias' => $categorias
         ]);
     }
 }
