@@ -76,6 +76,22 @@ class MostrarProductosController extends Controller
             'message' => 'Producto registrado correctamente'
         ]);
     }
+
+    public function existencia($name){
+        $producto = Producto::where('nom_producto', $name)->first();
+
+        if(!$producto){
+            return response()->json([
+                'exist' => False
+            ], 404);
+        }
+
+        return response()->json([
+            'exist' => true
+        ]);
+    }
+
+
     public function mostrarPorductosVenta(){
         $productosVenta = Producto::where('tipo_producto', 'venta')->get();
         return response()->json([
