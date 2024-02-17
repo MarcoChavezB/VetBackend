@@ -15,5 +15,6 @@ class Producto extends Model
         "existencias", "precio_venta", "id_categoria", "imagen"
     ];
 
+    public $timestamps = false;
     public $table = "productos";    
 }
