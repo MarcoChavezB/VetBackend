@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -26,3 +28,19 @@ Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::c
 // * Usuarios
 Route::post('/usuario/registro', [UsuarioController::class, 'registro']);
 Route::post('/usuario/login', [UsuarioController::class, 'login']); 
+
+
+// * Ventas 
+Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
+
+
+// * Citas 
+Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
+Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
+
+// pull a server 
+// cd /var/www/html/VetBackend
+// sudo chown -R ubuntu:ubuntu /var/www/html
+// git pull
+// sudo chown -R www-data:www-data /var/www/html
+// sudo systemctl restart apache2
