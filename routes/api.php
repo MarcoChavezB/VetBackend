@@ -22,8 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // * Productos
-Route::get('/productos/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
-Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
+Route::name('productos')->prefix('/usuario')->name('usuario')->group(function () {
+    Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
+    Route::get('/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
+    Route::get('/productosPublicos/index', [MostrarProductosController::class, 'indexPublic']);
+});
 
 
 Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
