@@ -21,7 +21,7 @@ class MostrarProductosController extends Controller
             'tipo_producto' => 'required | in:venta,interno',
             'existencias' => 'required | numeric | min:1',
             'precio_venta' => 'required | numeric | min:1',
-            'id_categoria' => 'required | numeric | min:1',
+            'categoria_producto' => 'required',
         ], [
             'nom_producto.required' => 'El nombre del producto es requerido',
             'nom_producto.min' => 'El nombre del producto debe tener al menos 3 caracteres',
@@ -41,10 +41,18 @@ class MostrarProductosController extends Controller
             'precio_venta.required' => 'El precio de venta es requerido',
             'precio_venta.numeric' => 'El precio de venta debe ser numérico',
             'precio_venta.min' => 'El precio de venta debe ser mayor a 0',
-            'id_categoria.required' => 'La categoría del producto es requerida',
-            'id_categoria.numeric' => 'La categoría del producto debe ser numérica',
-            'id_categoria.min' => 'La categoría del producto debe ser mayor a 0',
+            'categoria_producto.required' => 'La categoría del producto es requerida'
         ]);
+
+        // obten el id de la categoria por nombre 
+        $categoria = Categoria::where('categoria', $data['categoria_producto'])->first();
+
+        if(!$categoria){
+            return response()->json([
+                'message' => 'La categoría no existe'
+            ], 404);
+        }
+
 
         $producto = new Producto();
         $producto->nom_producto = $data['nom_producto'];
@@ -53,7 +61,7 @@ class MostrarProductosController extends Controller
         $producto->tipo_producto = $data['tipo_producto'];
         $producto->existencias = $data['existencias'];
         $producto->precio_venta = $data['precio_venta'];
-        $producto->id_categoria = $data['id_categoria'];
+        $producto->id_categoria = $categoria->id;
         $producto->save();
 
         return response()->json([
