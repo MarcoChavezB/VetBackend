@@ -38,6 +38,7 @@ Route::get('/ventas/graph/getPorcentaje', [VentaController::class, 'getPorcentaj
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
 Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
 Route::get('/citas/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
+Route::get('/citas/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
 
 // pull a server 
 // cd /var/www/html/VetBackend

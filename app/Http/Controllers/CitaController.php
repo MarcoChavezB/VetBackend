@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,14 @@ class CitaController extends Controller
         $productos = Producto::where('existencias', '<', 5)->get();
         return response()->json([
             'productos' => $productos
+        ]);
+    }
+
+    public function getPorcentajeCitas(){
+        $procentaje = PorcentajeCrecimientoCitas::all();
+
+        return response()->json([
+            'porcentaje' => $procentaje
         ]);
     }
 }
