@@ -55,9 +55,7 @@ class MostrarProductosController extends Controller
         ]);
     }
 
-    public function getProductoPublicoByName($name){
-        $resultados = DB::select("CALL producto_venta_nombre(?)", [$name]);
-        
+    public function getProductoPublicoByName($name = null){
         if(empty($name)){
             $resultado = DB::table('productos')
             ->select('id', 'nom_producto', 'descripcion', 'tipo_producto', 'imagen')
@@ -73,6 +71,8 @@ class MostrarProductosController extends Controller
                 'productos' => $resultado
             ]);
         }
+        
+        $resultados = DB::select("CALL producto_venta_nombre(?)", [$name]);
 
         return response()->json([
             'productos' => $resultados
