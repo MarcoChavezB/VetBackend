@@ -31,10 +31,12 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
 
+Route::name('ventas')->prefix('/ventas')->group(function () {
+    Route::post('/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
+    Route::get('/graph/getPorcentaje', [VentaController::class, 'getPorcentajeVentas']);
+    Route::get('/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);   
+});
 
-Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
-Route::get('/ventas/graph/getPorcentaje', [VentaController::class, 'getPorcentajeVentas']);
-Route::get('/ventas/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);
 
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
 Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
