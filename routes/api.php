@@ -32,7 +32,7 @@ Route::name('productos')->prefix('/productos')->group(function () {
     Route::get('/productosInternos/getProductoByName/{name?}', [MostrarProductosController::class, 'getProductoInternoByName']);
     Route::get('/getCategorias', [MostrarProductosController::class, 'getCategorias']);
     Route::post('/store', [MostrarProductosController::class, 'store']);
-    Route::post('/existe/{name}', [MostrarProductosController::class, 'existencia']);
+    Route::get('/existe/{name}', [MostrarProductosController::class, 'existencia']);
 
 });
 
