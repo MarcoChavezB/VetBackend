@@ -71,8 +71,19 @@ class MostrarProductosController extends Controller
                 'productos' => $resultado
             ]);
         }
-        
+
         $resultados = DB::select("CALL producto_venta_nombre(?)", [$name]);
+
+        return response()->json([
+            'productos' => $resultados
+        ]);
+    }
+
+    public function getProductosRango(Request $request){
+        $precioMin = $request->minPrice;
+        $precioMax = $request->maxPrice;
+
+        $resultados = DB::select("CALL obtener_productos_publicos_por_rango_precio(?, ?)", [$precioMin, $precioMax]);
 
         return response()->json([
             'productos' => $resultados
