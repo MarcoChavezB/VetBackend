@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
     public function registro(Request $request){
-        return response()->json([
-            'message' => 'Registro de usuario'
+        $validate = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:255|min:4',
+            'apellido' => 'required|string|max:255|min:4',
+            'email' => 'required|email|max:100|unique:users',
+            'password' => 'required|min:8',
         ]);
     }
 
 
     public function login(Request $request){
-        // login con JWT 
+        // login con JWT
         $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->first();
 
         if(!$user){
@@ -34,7 +38,7 @@ class UsuarioController extends Controller
 }
 
 
-// pull a server 
+// pull a server
 // cd /var/www/html/VetBackend
 // sudo chown -R ubuntu:ubuntu /var/www/html
 // git pull
