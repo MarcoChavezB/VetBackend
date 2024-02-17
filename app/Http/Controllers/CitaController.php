@@ -9,8 +9,8 @@ class CitaController extends Controller
 {
     public function getCitasProximas(){
         $citas = Cita::whereBetween('fecha_cita', [now(), now()->addDays(2)])
-        ->toSql();
-    
+        ->get();
+
         return response()->json([
             'citas' => $citas
         ]);
