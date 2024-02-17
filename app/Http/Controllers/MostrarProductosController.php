@@ -83,7 +83,7 @@ class MostrarProductosController extends Controller
         if(!$producto){
             return response()->json([
                 'exist' => False
-            ], 404);
+            ]);
         }
 
         return response()->json([
