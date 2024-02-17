@@ -46,8 +46,10 @@ class MostrarProductosController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'errors' => $validator->errors()->toArray(),
-                'message' => 'Error de validación'
+                'data' => [
+                    'message' => 'Error de validación',
+                    'errors' => $validator->errors()
+                ]
             ], 422);
         }
 
