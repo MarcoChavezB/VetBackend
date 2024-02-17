@@ -25,7 +25,7 @@ class UsuarioController extends Controller
             ]);
         }
 
-        $jwt = JWT::encode(['id', $user->id], env('JWT_SECRET'),'HS256');
+        $jwt = JWT::encode(['id' => $user->id], env('JWT_SECRET'), 'HS256');
         return response()->json([
             'msg' => 'Se ha logeado correctamente',
             'data' => $user,
