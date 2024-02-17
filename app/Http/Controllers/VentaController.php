@@ -28,4 +28,11 @@ class VentaController extends Controller
             'porcentaje' => $porcentaje
         ]);
     }
+
+    public function getPorcentajeMontoVentas(){
+        $porcentaje = PorcentajeCrecimientoVenta::all();
+        return response()->json([
+            'porcentaje' => $porcentaje
+        ]);
+    }
 }

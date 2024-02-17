@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PorcentajeCrecimientoVenta extends Model
 {
     use HasFactory;
-    protected $table = 'porcentaje_crecimiento_ventas';
+    protected $table = 'porcentajecrecimientomonto';
 
 }
