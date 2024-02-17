@@ -26,7 +26,7 @@ Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro
 Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    
+
     Route::name('productos')->prefix('/productos')->group(function () {
         Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
         Route::get('/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
@@ -43,16 +43,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::name('ventas')->prefix('/ventas')->group(function () {
         Route::post('/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
         Route::get('/graph/getPorcentaje', [VentaController::class, 'getPorcentajeVentas']);
-        Route::get('/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);   
+        Route::get('/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);
     });
-    
+
     Route::name('cita')->prefix('/citas')->group(function () {
         Route::get('/getCitasProximas', [CitaController::class, 'getCitasProximas']);
         Route::get('/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
         Route::get('/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
-            
+
     });
 });
 
