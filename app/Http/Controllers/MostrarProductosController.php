@@ -13,8 +13,8 @@ class MostrarProductosController extends Controller
 
     public function store(Request $request){
         $data = $request->all();
-
-        Validator::make($data, [
+         
+        $this->validate($request, [
             'nom_producto' => 'required | min:3 | max:50 | unique:productos,nom_producto',
             'descripcion' => 'required | min:3 | max:255',
             'precio_compra' => 'required | numeric | min:1',
