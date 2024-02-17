@@ -30,7 +30,7 @@ class MostrarProductosController extends Controller
         ->selectRaw('(MAX(precio_venta) * 0.16) as iva')
         ->selectRaw("CASE WHEN MAX(existencias) <= 0 THEN 'Sin stock' ELSE 'Stock' END as estado")
         ->where('tipo_producto', 'venta')
-        ->groupBy('nom_producto')
+        ->groupBy('id', 'nom_producto', 'descripcion', 'tipo_producto', 'imagen')
         ->get();
 
         return response()->json([
