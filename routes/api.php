@@ -30,4 +30,4 @@ Route::post('/usuario/login', [UsuarioController::class, 'login']);
 
 
 // * Ventas 
-Route::get('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
+Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
