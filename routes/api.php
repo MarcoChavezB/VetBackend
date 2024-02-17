@@ -25,3 +25,4 @@ Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::c
 
 // * Usuarios
 Route::post('/usuario/registro', [UsuarioController::class, 'registro']);
+Route::post('/usuario/login', [UsuarioController::class, 'login']); 
