@@ -36,3 +36,11 @@ Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes'
 
 // * Citas 
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
+
+
+// pull a server 
+// cd /var/www/html/VetBackend
+// sudo chown -R ubuntu:ubuntu /var/www/html
+// git pull
+// sudo chown -R www-data:www-data /var/www/html
+// sudo systemctl restart apache2
