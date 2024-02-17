@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/productosInternos/getProductoByName/{name?}', [MostrarProductosController::class, 'getProductoInternoByName']);
         Route::get('/getCategorias', [MostrarProductosController::class, 'getCategorias']);
         Route::post('/store', [MostrarProductosController::class, 'store']);
+        Route::get('/existe/{name}', [MostrarProductosController::class, 'existencia']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {

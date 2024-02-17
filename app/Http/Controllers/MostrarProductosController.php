@@ -47,7 +47,6 @@ class MostrarProductosController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'data' => [
-                    'message' => 'Error de validación',
                     'errors' => $validator->errors()
                 ]
             ], 422);
@@ -77,6 +76,22 @@ class MostrarProductosController extends Controller
             'message' => 'Producto registrado correctamente'
         ]);
     }
+
+    public function existencia($name){
+        $producto = Producto::where('nom_producto', $name)->first();
+
+        if(!$producto){
+            return response()->json([
+                'exist' => False
+            ]);
+        }
+
+        return response()->json([
+            'exist' => true
+        ]);
+    }
+
+
     public function mostrarPorductosVenta(){
         $productosVenta = Producto::where('tipo_producto', 'venta')->get();
         return response()->json([
