@@ -22,9 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // * Productos
-Route::get('/productos/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
 Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
 
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/productos/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
+});
 
 Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
     Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
