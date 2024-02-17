@@ -36,7 +36,7 @@ Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes'
 
 // * Citas 
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
-
+Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
 
 // pull a server 
 // cd /var/www/html/VetBackend
