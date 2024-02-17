@@ -21,24 +21,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// * Productos 
+// * Productos
 Route::get('/productos/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
 Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
 
-// * Usuarios
-Route::post('/usuario/registro', [UsuarioController::class, 'registro']);
-Route::post('/usuario/login', [UsuarioController::class, 'login']); 
+
+Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
+    Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
+    Route::post('/login', [UsuarioController::class, 'login'])->name('login');
+});
 
 
-// * Ventas 
+// * Ventas
 Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
 
 
-// * Citas 
+// * Citas
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
 Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
 
-// pull a server 
+// pull a server
 // cd /var/www/html/VetBackend
 // sudo chown -R ubuntu:ubuntu /var/www/html
 // git pull
