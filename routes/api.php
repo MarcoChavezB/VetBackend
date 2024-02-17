@@ -37,13 +37,14 @@ Route::name('ventas')->prefix('/ventas')->group(function () {
     Route::get('/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);   
 });
 
-
-Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
-Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
-Route::get('/citas/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
-Route::get('/citas/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
-Route::get('/citas/index', [CitaController::class, 'index']);
-
+Route::name('citas')->prefix('/citas')->group(function () {
+    Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
+    Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
+    Route::get('/citas/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
+    Route::get('/citas/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
+    Route::get('/citas/index', [CitaController::class, 'index']);
+        
+});
 
 // pull a server
 // cd /var/www/html/VetBackend
