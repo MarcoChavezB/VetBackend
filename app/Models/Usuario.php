@@ -18,4 +18,6 @@ class Usuario extends Model
         "contra",
         "tipo_usuario",
     ];
+
+    protected $table = 'usuarios';
 }
