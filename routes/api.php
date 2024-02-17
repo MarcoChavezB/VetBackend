@@ -32,13 +32,16 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
 });
 
 
-// * Ventas
 Route::post('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
+Route::get('/ventas/graph/getPorcentaje', [VentaController::class, 'getPorcentajeVentas']);
+Route::get('/ventas/graph/getPorcentaje/monto', [VentaController::class, 'getPorcentajeMontoVentas']);
 
-
-// * Citas
 Route::get('/citas/getCitasProximas', [CitaController::class, 'getCitasProximas']);
 Route::get('/citas/citasTotalHoy', [CitaController::class, 'citasTotalHoy']);
+Route::get('/citas/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
+Route::get('/citas/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
+Route::get('/citas/index', [CitaController::class, 'index']);
+
 
 // pull a server
 // cd /var/www/html/VetBackend
