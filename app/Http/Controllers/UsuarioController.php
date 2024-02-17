@@ -29,13 +29,13 @@ class UsuarioController extends Controller
         }
 
         $user = new Usuario();
-        $user->nombre = $request->nombre;
-        $user->apellido = $request->apellido;
-        $user->correo = $request->correo;
-        $user->telefono1 = $request->telefono1;
-        $user->telefono2 = $request->telefono2;
+        $user->nombre = $request->name;
+        $user->apellido = $request->last_name;
+        $user->correo = $request->email;
+        $user->telefono1 = $request->phone;
+        $user->telefono2 = $request->phone2;
         $user->tipo_usuario = $request->tipo_usuario;
-        $user->contra = Hash::make($request->contra);
+        $user->contra = Hash::make($request->password);
         $user->save();
 
         return response()->json([
