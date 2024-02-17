@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Usuario;
+use App\Models\User;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +15,8 @@ class UsuarioController extends Controller
         $validate = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255|min:4',
             'apellido' => 'required|string|max:255|min:4',
-            'correo' => 'required|email|max:100|unique:users',
-            'telefono1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
+            'correo' => 'required|email|max:100|unique:usuarios',
+            'telefono1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:usuarios',
             'telefono2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
             'contra' => 'required|min:4',
         ]);
@@ -31,6 +32,7 @@ class UsuarioController extends Controller
         $user->apellido = $request->apellido;
         $user->correo = $request->correo;
         $user->telefono1 = $request->telefono1;
+        $user->telefono2 = $request->telefono2;
         $user->tipo_usuario = $request->tipo_usuario;
         $user->contra = Hash::make($request->contra);
         $user->save();
@@ -43,8 +45,9 @@ class UsuarioController extends Controller
 
 
     public function login(Request $request){
-        // login con JWT
-        $user = Usuario::where('correo', $request->correo)->where('contra', $request->contra)->first();
+        // login con SANCTUM
+
+        $user = User::where('correo', $request->correo)->first();
 
         if(!$user){
             return response()->json([
@@ -52,11 +55,19 @@ class UsuarioController extends Controller
             ], 404);
         }
 
-        $jwt = JWT::encode(['id' => $user->id], env('JWT_SECRET'), 'HS256');
+        if(! $user || !Hash::check($request->contra, $user->contra)){
+            return response()->json([
+                'msg' => 'No autorizado'
+            ], 401);
+        }
+
+        $token = $user->createToken('Accesstoken')->plainTextToken;
+
         return response()->json([
             'msg' => 'Se ha logeado correctamente',
             'data' => $user,
-            'jwt' => $jwt
+            'jwt' => $token,
+            'token_type' => 'Bearer',
         ]);
     }
 }
