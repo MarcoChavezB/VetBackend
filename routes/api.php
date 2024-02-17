@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -26,3 +27,7 @@ Route::get('/productos/getProductoByName/{name}', [MostrarProductosController::c
 // * Usuarios
 Route::post('/usuario/registro', [UsuarioController::class, 'registro']);
 Route::post('/usuario/login', [UsuarioController::class, 'login']); 
+
+
+// * Ventas 
+Route::get('/ventas/getRangoVentas', [VentaController::class, 'getVentasPorMes']);
