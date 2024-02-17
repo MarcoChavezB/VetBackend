@@ -31,6 +31,10 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
+        Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
+    });
     
     Route::name('productos')->prefix('/productos')->group(function () {
         Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
