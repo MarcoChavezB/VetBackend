@@ -29,6 +29,7 @@ Route::name('productos')->prefix('/productos')->group(function () {
     Route::get('/productosInternos/index', [MostrarProductosController::class, 'indexInternos']);
     Route::get('/productosPublicos/getProductoByName/{name?}', [MostrarProductosController::class, 'getProductoPublicoByName']);
     Route::post('/productosPublicos/rango', [MostrarProductosController::class, 'getProductosRango']);
+    Route::get('/productosInternos/getProductoByName/{name?}', [MostrarProductosController::class, 'getProductoInternoByName']);
 });
 
 
