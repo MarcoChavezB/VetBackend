@@ -27,6 +27,8 @@ Route::name('productos')->prefix('/productos')->group(function () {
     Route::get('/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
     Route::get('/productosPublicos/index', [MostrarProductosController::class, 'indexPublic']);
     Route::get('/productosInternos/index', [MostrarProductosController::class, 'indexInternos']);
+    Route::get('/productosInternos/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoInternoByName']);
+    Route::get('/productosPublicos/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoPublicoByName']);
 });
 
 

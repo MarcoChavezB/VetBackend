@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\ProductoVentaNombre;
 use Illuminate\Support\Facades\DB;
 
 class MostrarProductosController extends Controller
@@ -51,6 +52,13 @@ class MostrarProductosController extends Controller
 
         return response()->json([
             'productos' => $resultado
+        ]);
+    }
+
+    public function getProductoPublicoByName($name){
+        $resultados = DB::select("CALL producto_venta_nombre(?)", [$name]);
+        return response()->json([
+            'productos' => $resultados
         ]);
     }
 }
