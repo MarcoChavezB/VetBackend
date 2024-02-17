@@ -36,14 +36,14 @@ return [
     */
 
     'guards' => [
+        'api:jwt'=>[
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
-        'api' => [
-            'driver' => 'sanctum',
-            'provider' => 'users',
-        ],
+        ]
     ],
 
     /*

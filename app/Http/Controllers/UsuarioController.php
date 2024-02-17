@@ -13,12 +13,13 @@ class UsuarioController extends Controller
 {
     public function registro(Request $request){
         $validate = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255|min:4',
-            'apellido' => 'required|string|max:255|min:4',
-            'correo' => 'required|email|max:100|unique:usuarios',
-            'telefono1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:usuarios',
-            'telefono2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
-            'contra' => 'required|min:4',
+            'name' => 'required|string|max:255|min:4',
+            'last_name' => 'required|string|max:255|min:4',
+            'email' => 'required|email|max:100|unique:usuarios',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:usuarios',
+            'phone2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
+            'password' => 'required|min:4',
+            'confirm_password' => 'required|same:password',
         ]);
 
         if($validate->fails()){
