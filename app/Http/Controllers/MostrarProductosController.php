@@ -10,6 +10,56 @@ use Illuminate\Support\Facades\DB;
 
 class MostrarProductosController extends Controller
 {
+
+    public function store(Request $request){
+        $data = $request->all();
+
+        $this->validate($request, [
+            'nom_producto' => 'required | min:3 | max:50 | unique:productos,nom_producto',
+            'descripcion' => 'required | min:3 | max:255',
+            'precio_compra' => 'required | numeric | min:1',
+            'tipo_producto' => 'required | in:venta,interno',
+            'existencias' => 'required | numeric | min:1',
+            'precio_venta' => 'required | numeric | min:1',
+            'id_categoria' => 'required | numeric | min:1',
+        ], [
+            'nom_producto.required' => 'El nombre del producto es requerido',
+            'nom_producto.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'nom_producto.max' => 'El nombre del producto debe tener máximo 50 caracteres',
+            'nom_producto.unique' => 'El nombre del producto ya existe',
+            'descripcion.required' => 'La descripción del producto es requerida',
+            'descripcion.min' => 'La descripción del producto debe tener al menos 3 caracteres',
+            'descripcion.max' => 'La descripción del producto debe tener máximo 255 caracteres',
+            'precio_compra.required' => 'El precio de compra es requerido',
+            'precio_compra.numeric' => 'El precio de compra debe ser numérico',
+            'precio_compra.min' => 'El precio de compra debe ser mayor a 0',
+            'tipo_producto.required' => 'El tipo de producto es requerido',
+            'tipo_producto.in' => 'El tipo de producto debe ser venta o interno',
+            'existencias.required' => 'Las existencias del producto son requeridas',
+            'existencias.numeric' => 'Las existencias del producto deben ser numéricas',
+            'existencias.min' => 'Las existencias del producto deben ser mayor a 0',
+            'precio_venta.required' => 'El precio de venta es requerido',
+            'precio_venta.numeric' => 'El precio de venta debe ser numérico',
+            'precio_venta.min' => 'El precio de venta debe ser mayor a 0',
+            'id_categoria.required' => 'La categoría del producto es requerida',
+            'id_categoria.numeric' => 'La categoría del producto debe ser numérica',
+            'id_categoria.min' => 'La categoría del producto debe ser mayor a 0',
+        ]);
+
+        $producto = new Producto();
+        $producto->nom_producto = $data['nom_producto'];
+        $producto->descripcion = $data['descripcion'];
+        $producto->precio_compra = $data['precio_compra'];
+        $producto->tipo_producto = $data['tipo_producto'];
+        $producto->existencias = $data['existencias'];
+        $producto->precio_venta = $data['precio_venta'];
+        $producto->id_categoria = $data['id_categoria'];
+        $producto->save();
+
+        return response()->json([
+            'message' => 'Producto registrado correctamente'
+        ]);
+    }
     public function mostrarPorductosVenta(){
         $productosVenta = Producto::where('tipo_producto', 'venta')->get();
         return response()->json([
