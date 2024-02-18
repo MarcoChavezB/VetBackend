@@ -16,8 +16,9 @@ class CitaController extends Controller
         $data = $request->all();
         $id = $data['cita_id'];
         $estatus = $data['cita_respuesta'];
+        $motivo = $data['motivo'] ?? null;
 
-        DB::select('Call cambiar_estatus_cita(?, ?)', [$id, $estatus]);
+        DB::select('Call cambiar_estatus_cita(?, ?, ?)', [$id, $estatus, $motivo]);
         
         return response()->json([
             'msg' => 'Estatus de la cita actualizado correctamente'
