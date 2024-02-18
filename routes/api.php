@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\GenerarConsultaController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
@@ -97,8 +98,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
         Route::post('/publicarono', [TipoServicioController::class, 'publicarono'])->name('publicarono');
     });
-
-
 
 
 });

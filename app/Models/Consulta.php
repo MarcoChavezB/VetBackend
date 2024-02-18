@@ -9,15 +9,16 @@ class Consulta extends Model
 {
     use HasFactory;
 
-       
-    protected $filleable = [
-        "id",
+
+    protected $fillable = [
         "id_cita",
         "observaciones",
         "peso_kg",
         "altura_mts",
         "edad_meses",
     ];
+
+    public $timestamps = false;
 
     protected $table = "consultas";
 }

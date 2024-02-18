@@ -9,12 +9,14 @@ class DetalleConsulta extends Model
 {
     use HasFactory;
 
-    protected $filleable = [
+    protected $fillable = [
         "id_consulta",
         "id_tservicios",
 
 
     ];
+
+    public $timestamps = false;
 
     protected $table = "detalle_consultas";
 }
