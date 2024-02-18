@@ -7,9 +7,41 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class MostrarProductosController extends Controller
 {
+
+    public function ventaProductos(Request $request){
+        $data = $request->all();
+        $tipo_pago = $data['metodo_pago'];
+        $productos = $data['productos'];
+
+        $venta = DB::select('Call venta_productos(?, ?)', [$tipo_pago, $productos]);
+
+        return response()->json([
+            'message' => 'Venta realizada correctamente',
+            'venta' => $venta
+        ]);
+    
+    }
+
+    public function GenerarTiket(){
+        $venta = DB::select('Call GenerarReporteUltimaVenta()');
+
+        return response()->json([
+            'venta' => $venta
+        ]);
+    }
+
+    
+    public function getProductosExistencias($name){
+        $productos = DB::select("CALL ObtenerProductosPorNombreLimite(?)", [$name]);
+
+        return response()->json([
+            'productos' => $productos
+        ]);
+    }
 
     public function disableProduct($id){
         $producto = Producto::find($id);
@@ -284,5 +316,58 @@ class MostrarProductosController extends Controller
         return response()->json([
             'categorias' => $categorias
         ]);
+    }
+
+
+    public function productoporcadena(Request $request)
+    {
+        try {
+            $resultados = DB::select("CALL BuscarPorNombreEnViewProductos(:cadena)", ['cadena' => $request->input('cadena')]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $resultados,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function productopublicoporcadena(Request $request)
+    {
+        try {
+            $resultados = DB::select("CALL BuscarPorNombreEnProductosVenta(:cadena)", ['cadena' => $request->input('cadena')]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $resultados,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function mostrarProductsPublic() {
+        try {
+            $resultados = DB::select("SELECT * FROM vista_productos_venta");
+
+            return response()->json([
+                'data' => $resultados
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNAUTHORIZED); 
+        }
     }
 }

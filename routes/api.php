@@ -39,6 +39,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
         Route::get('/getPets/{id}', [UsuarioController::class, 'getPets'])->where('id', '[0-9]+');
+        Route::get('/getAdministradores', [UsuarioController::class, 'getAdministradores']);
+        Route::get('/exist/{email}', [UsuarioController::class, 'existUser']);
+        Route::post('/store/administrador', [UsuarioController::class, 'storeAdministrador']);
     });
 
     Route::name('productos')->prefix('/productos')->group(function () {
@@ -56,6 +59,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
         Route::put('/update', [MostrarProductosController::class, 'update']);
         Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
+        Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
+        Route::get('/productosPublicos', [MostrarProductosController::class, 'mostrarProductsPublic'])->name('productosPublicos');
+        Route::post('/productopublicoporcadena', [MostrarProductosController::class, 'productopublicoporcadena'])->name('productopublicoporcadena');
+        Route::get('/getProductos/existencias/{name}', [MostrarProductosController::class, 'getProductosExistencias']);
+        Route::post('/ventaProductos', [MostrarProductosController::class, 'ventaProductos']);
+        Route::get('/GenerarTiket', [MostrarProductosController::class, 'generarTiket']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
@@ -77,6 +86,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update/status', [CitaController::class, 'updateStatus']);
         Route::get('/citasPendientes/{id}', [CitaController::class, 'citasPendientes'])->where('id', '[0-9]+');
         Route::get('/citasRechazadas/{id}', [CitaController::class, 'citasRechazadas'])->where('id', '[0-9]+');
+        Route::get('/citasAceptadas', [CitaController::class, 'citasAceptadas']);
+        Route::get('/citasProximas', [CitaController::class, 'citasProximas']);
 
     });
 
@@ -97,8 +108,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/serviciospublicosesteticos', [TipoServicioController::class, 'serviciospublicosesteticos'])->name('serviciospublicosesteticos');
         Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
         Route::post('/publicarono', [TipoServicioController::class, 'publicarono'])->name('publicarono');
-    });
+        Route::post('/agregarservicioproduct', [TipoServicioController::class, 'CrearTipoServicioYProductos'])->name('agregarservicioproduct');
 
+    });
 
 });
 

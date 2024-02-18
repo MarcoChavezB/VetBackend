@@ -12,13 +12,51 @@ use Illuminate\Support\Facades\Validator;
 
 class CitaController extends Controller
 {
+
+    public function citasProximas(){
+        $citas = DB::select("SELECT 
+        citas.id,
+        clientes.nombre,
+        clientes.telefono1,
+        citas.fecha_cita,
+        citas.estatus,
+        animales.raza
+        from citas
+            inner join animales on animales.id = citas. id_mascota
+            inner join clientes on clientes.id = animales.propietario
+            where citas.fecha_cita between now() and now() + interval 2 day");
+
+        return response()->json([
+            'citas' => $citas
+        ]);
+    }
+
+    public function citasAceptadas(){
+        $citas = DB::select("SELECT 
+        citas.id,
+        clientes.nombre,
+        clientes.telefono1,
+        citas.fecha_cita,
+        citas.estatus,
+        animales.raza
+        from citas
+            inner join animales on animales.id = citas. id_mascota
+            inner join clientes on clientes.id = animales.propietario
+            where citas.estatus = 'Aceptada'");
+
+        return response()->json([
+            'citas' => $citas
+        ]);
+    }
+
     public function updateStatus(Request $request){
         $data = $request->all();
         $id = $data['cita_id'];
         $estatus = $data['cita_respuesta'];
+        $motivo = $data['motivo'] ?? null;
 
-        DB::select('Call cambiar_estatus_cita(?, ?)', [$id, $estatus]);
-
+        DB::select('Call cambiar_estatus_cita(?, ?, ?)', [$id, $estatus, $motivo]);
+        
         return response()->json([
             'msg' => 'Estatus de la cita actualizado correctamente'
         ]);
@@ -55,7 +93,7 @@ class CitaController extends Controller
     }
 
     public function citasTotalHoy(){
-        $citas = Cita::whereDate('fecha_cita', now())->get();
+        $citas = Cita::whereDate('fecha_cita', now())->count();
         return response()->json([
             'citas' => $citas
         ]);
