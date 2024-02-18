@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Validator;
 class CitaController extends Controller
 {
 
+    public function citasProximas(){
+        $citas = DB::select("SELECT 
+        citas.id,
+        clientes.nombre,
+        clientes.telefono1,
+        citas.fecha_cita,
+        citas.estatus,
+        animales.raza
+        from citas
+            inner join animales on animales.id = citas. id_mascota
+            inner join clientes on clientes.id = animales.propietario
+            where citas.fecha_cita between now() and now() + interval 2 day");
+
+        return response()->json([
+            'citas' => $citas
+        ]);
+    }
+
     public function citasAceptadas(){
         $citas = DB::select("SELECT 
         citas.id,

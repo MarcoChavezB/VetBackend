@@ -78,6 +78,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/citasPendientes/{id}', [CitaController::class, 'citasPendientes'])->where('id', '[0-9]+');
         Route::get('/citasRechazadas/{id}', [CitaController::class, 'citasRechazadas'])->where('id', '[0-9]+');
         Route::get('/citasAceptadas', [CitaController::class, 'citasAceptadas']);
+        Route::get('/citasProximas', [CitaController::class, 'citasProximas']);
 
     });
 
