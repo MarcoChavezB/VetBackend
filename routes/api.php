@@ -117,7 +117,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::name('clientes.')->prefix('/clientes')->group(function () {
         Route::post('/infoCorreo', [ClienteController::class, 'buscarPorCorreo'])->name('infoCorreo');
         Route::post('/actualizar', [ClienteController::class, 'update'])->name('actualizar');
-        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');        
+        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');
         Route::post('/verificarcontraseña', [ClienteController::class, 'verificarcontraseña'])->name('verificarcontraseña');
     });
 
@@ -136,8 +136,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/store', [GenerarConsultaController::class, 'store'])->name('store');
         Route::get('/tServicios', [GenerarConsultaController::class, 'tServicios'])->name('tServicios');
         Route::post('/calcularCostoDetallado', [GenerarConsultaController::class, 'calcularCostoDetallado'])->name('calcularCostoDetallado');
-        Route::get('/buscarServicios', [GenerarConsultaController::class, 'buscarServicios'])->name('buscarServicios');
-        Route::get('/generarConsultasCliente', [GenerarConsultaController::class, 'generarConsultaCliente'])->name('generarConsultasCliente');
+        Route::post('/buscarServicios', [GenerarConsultaController::class, 'buscarServicios'])->name('buscarServicios');
+        Route::post('/generarConsultasCliente', [GenerarConsultaController::class, 'generarConsultaCliente'])->name('generarConsultasCliente');
     });
 
 });
