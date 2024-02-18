@@ -53,6 +53,20 @@ class CitaController extends Controller
         ]);
     }
 
+    public function getCitasHoy(){
+        $citas = DB::table('citas')
+            ->select('citas.id', 'clientes.nombre', 'clientes.telefono1', 'citas.fecha_cita', 'citas.estatus', 'animales.raza')
+            ->join('animales', 'animales.id', '=', 'citas.id_mascota')
+            ->join('clientes', 'clientes.id', '=', 'animales.propietario')
+            ->whereDate('citas.fecha_cita', now())
+            ->get();
+
+        return response()->json([
+            'citas' => $citas
+        ]);
+    
+    }
+
     public function vaidacionFechas(){
         $fechas = DB::table('validacionfechas')->get();
 
