@@ -38,4 +38,19 @@ class MascotaController extends Controller
         ]);
 
     }
+
+
+    public function index(int $id)
+    {
+        $mascotas = Animal::select('id', 'nombre')->where('propietario', $id)->get();
+        if ($mascotas->isEmpty()) {
+            return response()->json([
+                'msg' => 'No hay mascotas registradas'
+            ], 404);
+        }
+        return response()->json([
+            'msg' => 'Lista de mascotas',
+            'data' => $mascotas
+        ]);
+    }
 }

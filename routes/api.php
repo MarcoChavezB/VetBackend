@@ -68,8 +68,11 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
-        Route::post('/store', [MascotaController::class, 'store']);
+        Route::post('/store', [MascotaController::class, 'store'])->name('store');
+        Route::get('/index/{id}', [MascotaController::class, 'index'])->name('index')->where('id', '[0-9]+');
     });
+
+
 //});
 
 
