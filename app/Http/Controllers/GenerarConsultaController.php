@@ -81,4 +81,50 @@ class GenerarConsultaController extends Controller
             'data' => $resultados
         ]);
     }
+
+    public function generarConsultaCliente(Request $request){
+        $validate = Validator::make($request->all(), [
+            'Nombre' => 'required|string',
+            'Apellido' => 'required|string',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $resultados = DB::select("CALL generarConsultaCliente(?, ?)", array($request->Nombre, $request->Apellido));
+
+        return response()->json([
+            'data' => $resultados
+        ]);
+    }
+
+    public function buscarServicios(Request $request){
+        $validate = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:255',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $servicios = DB::table('tservicios')
+            ->select('id', 'nombre_TServicio')
+            ->where('nombre_TServicio', 'like', '%'.$request->nombre.'%')
+            ->get();
+
+        if ($servicios->isEmpty()) {
+            return response()->json([
+                'msg' => 'No se encontraron servicios'
+            ], 404);
+        }
+
+        return response()->json([
+            'servicios' => $servicios
+        ], 201);
+    }
 }
