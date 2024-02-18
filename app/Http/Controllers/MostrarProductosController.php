@@ -285,4 +285,23 @@ class MostrarProductosController extends Controller
             'categorias' => $categorias
         ]);
     }
+
+
+    public function productoporcadena(Request $request)
+    {
+        try {
+            $resultados = DB::select("CALL BuscarPorNombreEnViewProductos(:cadena)", ['cadena' => $request->input('cadena')]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $resultados,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

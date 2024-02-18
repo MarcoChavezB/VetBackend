@@ -54,6 +54,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
         Route::put('/update', [MostrarProductosController::class, 'update']);
         Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
+        Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
@@ -95,6 +96,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/serviciospublicosesteticos', [TipoServicioController::class, 'serviciospublicosesteticos'])->name('serviciospublicosesteticos');
         Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
         Route::post('/publicarono', [TipoServicioController::class, 'publicarono'])->name('publicarono');
+        Route::post('/agregarservicioproduct', [TipoServicioController::class, 'CrearTipoServicioYProductos'])->name('agregarservicioproduct');
+
     });
 
 
