@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VentaController;
@@ -35,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
     });
-    
+
     Route::name('productos')->prefix('/productos')->group(function () {
         Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
         Route::get('/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
@@ -61,7 +62,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
+    });
 
+    Route::name('mascotas.')->prefix('/mascotas')->group(function () {
+        Route::post('/store', [MascotaController::class, 'store']);
     });
 });
 

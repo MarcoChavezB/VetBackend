@@ -17,10 +17,8 @@ class Animal extends Model
         "genero"
     ];
 
-    protected $hidden = [
-        "created_at",
-        "updated_at"
-    ];
+    public $timestamps = false;
+
 
     protected $table = "animales";
 }
