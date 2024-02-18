@@ -31,7 +31,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
-//Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
@@ -51,7 +51,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/getProductoById/{id}', [MostrarProductosController::class, 'getProductoById']);
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
         Route::put('/update', [MostrarProductosController::class, 'update']);
-        Route::delete('/delete/{id}', [MostrarProductosController::class, 'delete']);
+        Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
@@ -67,7 +67,9 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
+        Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
         Route::post('/store', [CitaController::class, 'store']);
+
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
@@ -77,7 +79,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
 
 
 
-//});
+});
 
 
 
