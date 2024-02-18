@@ -64,12 +64,14 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/getProductos/pocasExistencias', [CitaController::class, 'getProductosPocasExistencias']);
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
+        Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
         Route::post('/store', [MascotaController::class, 'store'])->name('store');
         Route::get('/index/{id}', [MascotaController::class, 'index'])->name('index')->where('id', '[0-9]+');
     });
+
 
 
 //});

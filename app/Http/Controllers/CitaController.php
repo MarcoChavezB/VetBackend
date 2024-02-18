@@ -52,4 +52,12 @@ class CitaController extends Controller
             'citas' => $citas
         ]);
     }
+
+    public function vaidacionFechas(){
+        $fechas = DB::table('validacionfechas')->get();
+
+        return response()->json([
+            'data' => $fechas
+        ]);
+    }
 }
