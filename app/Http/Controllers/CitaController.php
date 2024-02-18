@@ -20,6 +20,27 @@ class CitaController extends Controller
         ]);
     }
 
+    public function getCitaById($id){
+        $cita = DB::select("SELECT 
+        citas.id,
+        citas.motivo,
+        clientes.nombre,
+        clientes.telefono1,
+        citas.fecha_registro,
+        citas.fecha_cita,
+        citas.estatus,
+        animales.raza
+        FROM citas
+            INNER JOIN animales ON animales.id = citas.id_mascota
+            INNER JOIN clientes ON clientes.id = animales.propietario   
+        WHERE citas.id = :cita_id",
+        ['cita_id' => $id,]);
+
+        return response()->json([
+            'cita' => $cita
+        ]);
+    }
+
     public function citasTotalHoy(){
         $citas = Cita::whereDate('fecha_cita', now())->get();
         return response()->json([
