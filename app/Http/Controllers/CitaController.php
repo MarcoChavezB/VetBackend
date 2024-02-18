@@ -12,6 +12,25 @@ use Illuminate\Support\Facades\Validator;
 
 class CitaController extends Controller
 {
+
+    public function citasAceptadas(){
+        $citas = DB::select("SELECT 
+        citas.id,
+        clientes.nombre,
+        clientes.telefono1,
+        citas.fecha_cita,
+        citas.estatus,
+        animales.raza
+        from citas
+            inner join animales on animales.id = citas. id_mascota
+            inner join clientes on clientes.id = animales.propietario
+            where citas.estatus = 'Aceptada'");
+
+        return response()->json([
+            'citas' => $citas
+        ]);
+    }
+
     public function updateStatus(Request $request){
         $data = $request->all();
         $id = $data['cita_id'];
