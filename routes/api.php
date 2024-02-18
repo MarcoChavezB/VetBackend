@@ -68,6 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/index', [CitaController::class, 'index']);
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
         Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
+        Route::get('/index/cita/{id}', [CitaController::class, 'getCitaById']);
         
     });
 
