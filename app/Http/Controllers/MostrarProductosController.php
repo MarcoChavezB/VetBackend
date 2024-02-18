@@ -17,7 +17,7 @@ class MostrarProductosController extends Controller
         $tipo_pago = $data['metodo_pago'];
         $productos = $data['productos'];
 
-        $venta = DB::select('Call venta_productos(?, ?)', [$tipo_pago, json_encode($productos)]);
+        $venta = DB::select('Call venta_productos(?, ?)', [$tipo_pago, $productos]);
 
         return response()->json([
             'message' => 'Venta realizada correctamente',
