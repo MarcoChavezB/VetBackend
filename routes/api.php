@@ -59,6 +59,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update', [MostrarProductosController::class, 'update']);
         Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
         Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
+        Route::get('/productosPublicos', [MostrarProductosController::class, 'mostrarProductsPublic'])->name('productosPublicos');
+        Route::post('/productopublicoporcadena', [MostrarProductosController::class, 'productopublicoporcadena'])->name('productopublicoporcadena');
         Route::get('/getProductos/existencias/{name}', [MostrarProductosController::class, 'getProductosExistencias']);
         Route::post('/ventaProductos', [MostrarProductosController::class, 'ventaProductos']);
         Route::get('/GenerarTiket', [MostrarProductosController::class, 'generarTiket']);

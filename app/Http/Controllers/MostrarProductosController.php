@@ -336,4 +336,38 @@ class MostrarProductosController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function productopublicoporcadena(Request $request)
+    {
+        try {
+            $resultados = DB::select("CALL BuscarPorNombreEnProductosVenta(:cadena)", ['cadena' => $request->input('cadena')]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $resultados,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function mostrarProductsPublic() {
+        try {
+            $resultados = DB::select("SELECT * FROM vista_productos_venta");
+
+            return response()->json([
+                'data' => $resultados
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNAUTHORIZED); 
+        }
+    }
 }
