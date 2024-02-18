@@ -11,6 +11,27 @@ use Illuminate\Support\Facades\DB;
 class MostrarProductosController extends Controller
 {
 
+    public function updateOne(Request $request){
+        $data = $request->all();
+        $nombre = $data['nombre_producto'];
+        $cantidad = $data['cantidad_producto'];
+
+        $producto = Producto::where('nom_producto', $nombre)->first();
+
+        if(!$producto){
+            return response()->json([
+                'message' => 'El producto no existe'
+            ], 404);
+        }
+
+        $producto->existencias = $producto->existencias + $cantidad;
+        $producto->save();
+
+        return response()->json([
+            'message' => 'Producto actualizado correctamente'
+        ]);
+    }
+
     public function getProductoById($id){
         $producto = Producto::find($id);
         $categoria = Categoria::find($producto->id_categoria);
