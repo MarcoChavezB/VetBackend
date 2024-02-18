@@ -13,13 +13,13 @@ class UsuarioController extends Controller
 {
     public function registro(Request $request){
         $validate = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|min:4',
-            'last_name' => 'required|string|max:255|min:4',
-            'email' => 'required|email|max:100|unique:usuarios',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:usuarios',
-            'phone2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
-            'password' => 'required|min:4',
-            'confirm_password' => 'required|same:password',
+            'nombre' => 'required|string|max:255|min:4',
+            'apellido' => 'required|string|max:255|min:4',
+            'correo' => 'required|email|max:100|unique:usuarios',
+            'telefono1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:usuarios',
+            'telefono2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10',
+            'contra' => 'required|min:4',
+            'confirm_password' => 'required|same:contra',
         ]);
 
         if($validate->fails()){
@@ -29,13 +29,13 @@ class UsuarioController extends Controller
         }
 
         $user = new Usuario();
-        $user->nombre = $request->name;
-        $user->apellido = $request->last_name;
-        $user->correo = $request->email;
-        $user->telefono1 = $request->phone;
-        $user->telefono2 = $request->phone2;
+        $user->nombre = $request->nombre;
+        $user->apellido = $request->apellido;
+        $user->correo = $request->correo;
+        $user->telefono1 = $request->telefono1;
+        $user->telefono2 = $request->telefono2;
         $user->tipo_usuario = $request->tipo_usuario;
-        $user->contra = Hash::make($request->password);
+        $user->contra = Hash::make($request->contra);
         $user->save();
 
         return response()->json([
