@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
         Route::get('/getPets/{id}', [UsuarioController::class, 'getPets'])->where('id', '[0-9]+');
         Route::get('/getAdministradores', [UsuarioController::class, 'getAdministradores']);
+        Route::get('/exist/{email}', [UsuarioController::class, 'existUser']);
     });
 
     Route::name('productos')->prefix('/productos')->group(function () {

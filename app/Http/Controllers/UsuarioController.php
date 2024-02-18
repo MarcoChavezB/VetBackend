@@ -13,6 +13,21 @@ use Illuminate\Support\Facades\Validator;
 class UsuarioController extends Controller
 {
 
+    public function existUser($email){
+        $user = Usuario::where('correo', $email)
+        ->where('tipo_usuario', 'Administrador')
+        ->first();
+        
+        if(!$user){
+            return response()->json([
+                'exist' => false
+            ]);
+        }
+        return response()->json([
+            'exist' => true
+        ]);
+    }
+
     public function getAdministradores(){
         $usuarios = Usuario::select('id', 'nombre', 'apellido', 'correo', 'telefono1', 'telefono2', 'tipo_usuario')->where('tipo_usuario', 'Administrador')->get();
         if ($usuarios->isEmpty()) {
