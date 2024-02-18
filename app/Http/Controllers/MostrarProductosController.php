@@ -12,6 +12,20 @@ use Illuminate\Http\Response;
 class MostrarProductosController extends Controller
 {
 
+    public function ventaProductos(Request $request){
+        $data = $request->all();
+        $tipo_pago = $data['tipo_pago'];
+        $productos = $data['productos'];
+
+        $venta = DB::select('Call venta_productos(?, ?)', [$tipo_pago, json_encode($productos)]);
+
+        return response()->json([
+            'message' => 'Venta realizada correctamente',
+            'venta' => $venta
+        ]);
+    
+    }
+
     public function getProductosExistencias($name){
         $productos = DB::select("CALL ObtenerProductosPorNombreLimite(?)", [$name]);
 
