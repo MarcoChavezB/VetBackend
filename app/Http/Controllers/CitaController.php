@@ -14,7 +14,7 @@ class CitaController extends Controller
 {
 
     public function citasProximas(){
-        $citas = DB::select("SELECT 
+        $citas = DB::select("SELECT
         citas.id,
         clientes.nombre,
         clientes.telefono1,
@@ -32,7 +32,7 @@ class CitaController extends Controller
     }
 
     public function citasAceptadas(){
-        $citas = DB::select("SELECT 
+        $citas = DB::select("SELECT
         citas.id,
         clientes.nombre,
         clientes.telefono1,
@@ -56,7 +56,7 @@ class CitaController extends Controller
         $motivo = $data['motivo'] ?? null;
 
         DB::select('Call cambiar_estatus_cita(?, ?, ?)', [$id, $estatus, $motivo]);
-        
+
         return response()->json([
             'msg' => 'Estatus de la cita actualizado correctamente'
         ]);
@@ -184,8 +184,10 @@ class CitaController extends Controller
             ->join('usuarios', 'citas.user_regis', '=', 'usuarios.id')
             ->select('citas.id', 'citas.fecha_cita as Fecha', 'citas.estatus as Estatus', 'citas.motivo as Motivo', 'animales.nombre as Nombre', 'usuarios.nombre as cliente')
             ->where('user_regis', $id)
-            ->where('estatus', 'Pendiente')
-            ->orWhere('estatus', 'Aceptada')
+            ->where(function ($query) {
+                $query->where('estatus', 'Pendiente')
+                    ->orWhere('estatus', 'Aceptada');
+            })
             ->get();
         if ($citas->isEmpty()) {
             return response()->json([
