@@ -51,7 +51,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/getProductoById/{id}', [MostrarProductosController::class, 'getProductoById']);
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
         Route::put('/update', [MostrarProductosController::class, 'update']);
-        Route::delete('/delete/{id}', [MostrarProductosController::class, 'delete']);
+        Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
