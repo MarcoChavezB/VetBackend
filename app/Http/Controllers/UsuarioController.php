@@ -13,11 +13,29 @@ use Illuminate\Support\Facades\Validator;
 class UsuarioController extends Controller
 {
 
+    public function storeAdministrador(Request $request){
+
+        $user = new Usuario();
+        $user->nombre = $request->nombre;
+        $user->apellido = $request->last;
+        $user->correo = $request->correo;
+        $user->telefono1 = $request->tel1;
+        $user->telefono2 = $request->tel2;
+        $user->tipo_usuario = 'Administrador';
+        $user->contra = Hash::make($request->contrasena);
+        $user->save();
+
+        return response()->json([
+            'msg' => 'Usuario registrado correctamente',
+            'data' => $user
+        ], 201);
+    }
+
     public function existUser($email){
         $user = Usuario::where('correo', $email)
         ->where('tipo_usuario', 'Administrador')
         ->first();
-        
+
         if(!$user){
             return response()->json([
                 'exist' => false

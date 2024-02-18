@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/getPets/{id}', [UsuarioController::class, 'getPets'])->where('id', '[0-9]+');
         Route::get('/getAdministradores', [UsuarioController::class, 'getAdministradores']);
         Route::get('/exist/{email}', [UsuarioController::class, 'existUser']);
+        Route::post('/store/administrador', [UsuarioController::class, 'storeAdministrador']);
     });
 
     Route::name('productos')->prefix('/productos')->group(function () {
