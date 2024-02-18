@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Animal;
 use Illuminate\Support\Facades\Log;
 use App\Models\Usuario;
 use App\Models\User;
@@ -76,6 +77,20 @@ class UsuarioController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Sesión cerrada exitosamente.']);
+    }
+
+    public function getPets(int $id)
+    {
+        $mascotas = Animal::select('id', 'nombre')->where('propietario', $id)->get();
+        if ($mascotas->isEmpty()) {
+            return response()->json([
+                'msg' => 'No hay mascotas registradas'
+            ], 404);
+        }
+        return response()->json([
+            'msg' => 'Lista de mascotas',
+            'data' => $mascotas
+        ], 201);
     }
 
 }

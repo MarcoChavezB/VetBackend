@@ -9,8 +9,10 @@ class TipoServicio extends Model
 {
     use HasFactory;
 
-    protected $filleable = [
+    protected $fillable = [
         "id", "nombre_TServicio", "id_servicio", "descripcion", "precio", "estado"
     ];
-    protected $table = "tipos_servicios";
+    public $timestamps = false;
+    public $table = "tipos_servicios";
+
 }

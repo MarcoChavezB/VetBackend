@@ -4,7 +4,9 @@ use App\Http\Controllers\CitaController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\TipoServicioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -35,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
+        Route::get('/getPets/{id}', [UsuarioController::class, 'getPets'])->where('id', '[0-9]+');
     });
 
     Route::name('productos')->prefix('/productos')->group(function () {
@@ -52,6 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
         Route::put('/update', [MostrarProductosController::class, 'update']);
         Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
+        Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
@@ -71,6 +75,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/index/cita/{id}', [CitaController::class, 'getCitaById']);
         Route::post('/store', [CitaController::class, 'store']);
         Route::put('/update/status', [CitaController::class, 'updateStatus']);
+        Route::get('/citasPendientes/{id}', [CitaController::class, 'citasPendientes'])->where('id', '[0-9]+');
+        Route::get('/citasRechazadas/{id}', [CitaController::class, 'citasRechazadas'])->where('id', '[0-9]+');
 
     });
 
@@ -78,6 +84,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/store', [MascotaController::class, 'store'])->name('store');
         Route::get('/index/{id}', [MascotaController::class, 'index'])->name('index')->where('id', '[0-9]+');
     });
+
+    Route::name('clientes.')->prefix('/clientes')->group(function () {
+        Route::post('/infoCorreo', [ClienteController::class, 'buscarPorCorreo'])->name('infoCorreo');
+        Route::post('/actualizar', [ClienteController::class, 'update'])->name('actualizar');
+        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');
+    });
+
+    Route::name('servicios.')->prefix('/servicios')->group(function () {
+        Route::get('/publicos', [TipoServicioController::class, 'serviciospublicos'])->name('publicos');
+        Route::get('/privados', [TipoServicioController::class, 'serviciosprivados'])->name('privados');
+        Route::get('/serviciospublicosesteticos', [TipoServicioController::class, 'serviciospublicosesteticos'])->name('serviciospublicosesteticos');
+        Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
+        Route::post('/publicarono', [TipoServicioController::class, 'publicarono'])->name('publicarono');
+        Route::post('/agregarservicioproduct', [TipoServicioController::class, 'CrearTipoServicioYProductos'])->name('agregarservicioproduct');
+
+    });
+
 
 
 });
