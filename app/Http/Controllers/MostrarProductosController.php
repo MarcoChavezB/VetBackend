@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\DB;
 class MostrarProductosController extends Controller
 {
 
+    public function disableProduct($id){
+        $producto = Producto::find($id);
+        $producto->disabled = 1;
+        $producto->save();
+
+        return response()->json([
+            'message' => 'Producto deshabilitado correctamente'
+        ]);
+    }
+
     public function update(Request $request){
         $data = $request->all();
         $nombre = $data['nombre'];
