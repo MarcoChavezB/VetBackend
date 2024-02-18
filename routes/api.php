@@ -69,6 +69,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
+        Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
+        Route::get('/index/cita/{id}', [CitaController::class, 'getCitaById']);
+        Route::post('/store', [CitaController::class, 'store']);
+        Route::put('/update/status', [CitaController::class, 'updateStatus']);
+        Route::get('/citasPendientes/{id}', [CitaController::class, 'citasPendientes'])->where('id', '[0-9]+');
+        Route::get('/citasRechazadas/{id}', [CitaController::class, 'citasRechazadas'])->where('id', '[0-9]+');
+
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {

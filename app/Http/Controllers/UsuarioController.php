@@ -41,7 +41,7 @@ class UsuarioController extends Controller
         return response()->json([
             'msg' => 'Usuario registrado correctamente',
             'data' => $user
-        ]);
+        ], 201);
     }
 
 
