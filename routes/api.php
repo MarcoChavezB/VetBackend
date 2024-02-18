@@ -30,7 +30,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
-Route::middleware(['auth:sanctum'])->group(function () {
+//Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
@@ -63,7 +63,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/index', [CitaController::class, 'index']);
 
     });
-});
+//});
 
 
 
