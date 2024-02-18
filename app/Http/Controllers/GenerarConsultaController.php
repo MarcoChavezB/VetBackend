@@ -127,4 +127,42 @@ class GenerarConsultaController extends Controller
             'servicios' => $servicios
         ], 201);
     }
+
+    public function reporteCitasRechazadasCliente(Request $request){
+        $validate = Validator::make($request->all(), [
+            'Nombre' => 'required|string',
+            'Apellido' => 'required|string',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $resultados = DB::select("CALL ReporteCitasRechazadasCliente(?, ?)", array($request->Nombre, $request->Apellido));
+
+        return response()->json([
+            'data' => $resultados
+        ]);
+    }
+
+    public function reporteCitasRechazadasFecha(Request $request){
+        $validate = Validator::make($request->all(), [
+            'Fecha' => 'required|date',
+            'Fecha2' => 'required|date',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $resultados = DB::select("CALL ReporteCitasRechazadasFecha(?, ?)", array($request->Fecha, $request->Fecha2));
+
+        return response()->json([
+            'data' => $resultados
+        ]);
+    }
 }
