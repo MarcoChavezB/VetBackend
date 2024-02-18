@@ -112,6 +112,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
 
+    Route::name('consultas.')->prefix('/consultas')->group(function () {
+        Route::get('/generarConsultas', [GenerarConsultaController::class, 'generarConsultas'])->name('generarConsulta');
+        Route::post('/store', [GenerarConsultaController::class, 'store'])->name('store');
+    });
+
 });
 
 
