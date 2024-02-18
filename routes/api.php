@@ -50,6 +50,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/existe/{name}', [MostrarProductosController::class, 'existencia']);
         Route::get('/getProductoById/{id}', [MostrarProductosController::class, 'getProductoById']);
         Route::post('/update/one', [MostrarProductosController::class, 'updateOne']);
+        Route::put('/update', [MostrarProductosController::class, 'update']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
