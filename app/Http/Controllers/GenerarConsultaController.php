@@ -94,7 +94,7 @@ class GenerarConsultaController extends Controller
             ], 400);
         }
 
-        $resultados = DB::select("CALL generarConsultaCliente(?, ?)", array($request->Nombre, $request->Apellido));
+        $resultados = DB::select("CALL GenerarConsultasCliente(?, ?)", array($request->Nombre, $request->Apellido));
 
         return response()->json([
             'data' => $resultados
