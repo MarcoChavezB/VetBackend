@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\GenerarConsultaController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
@@ -130,7 +131,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
 
-
+    Route::name('consultas.')->prefix('/consultas')->group(function () {
+        Route::get('/generarConsultas', [GenerarConsultaController::class, 'generarConsultas'])->name('generarConsulta');
+        Route::post('/store', [GenerarConsultaController::class, 'store'])->name('store');
+        Route::get('/tServicios', [GenerarConsultaController::class, 'tServicios'])->name('tServicios');
+        Route::post('/calcularCostoDetallado', [GenerarConsultaController::class, 'calcularCostoDetallado'])->name('calcularCostoDetallado');
+    });
 
 });
 
