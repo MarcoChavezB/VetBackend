@@ -50,8 +50,8 @@ class GenerarConsultaController extends Controller
 
         foreach ($request->servicios_id as $servicio) {
             $dc = new DetalleConsulta();
-            $dc->id_consulta = $consulta->id;
-            $dc->id_servicio = $servicio;
+            $dc->consulta_id = $consulta->id;
+            $dc->tservicios_id = $servicio;
             $dc->save();
         }
 

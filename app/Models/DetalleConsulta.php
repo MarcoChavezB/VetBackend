@@ -10,8 +10,8 @@ class DetalleConsulta extends Model
     use HasFactory;
 
     protected $fillable = [
-        "id_consulta",
-        "id_tservicios",
+        "consulta_id",
+        "tservicios_id",
 
 
     ];
