@@ -28,9 +28,9 @@ class GenerarConsultaController extends Controller
         $validate = Validator::make($request->all(), [
             'id_cita' => 'required|exists:citas,id|integer',
             'observaciones' => 'required|string|max:255|min:4',
-            'peso_kg' => 'required|float',
-            'altura_mts' => 'required|float',
-            'edad_meses' => 'required|float',
+            'peso_kg' => 'required',
+            'altura_mts' => 'required',
+            'edad_meses' => 'required',
             'servicios_id' => 'required|array',
         ]);
 
