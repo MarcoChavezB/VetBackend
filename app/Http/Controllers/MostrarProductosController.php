@@ -12,6 +12,14 @@ use Illuminate\Http\Response;
 class MostrarProductosController extends Controller
 {
 
+    public function getProductosExistencias($name){
+        $productos = DB::select("CALL ObtenerProductosPorNombreLimite(?)", [$name]);
+
+        return response()->json([
+            'productos' => $productos
+        ]);
+    }
+
     public function disableProduct($id){
         $producto = Producto::find($id);
         $producto->disabled = 1;

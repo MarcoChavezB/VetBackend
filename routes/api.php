@@ -56,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/update', [MostrarProductosController::class, 'update']);
         Route::delete('/delete/{id}', [MostrarProductosController::class, 'disableProduct']);
         Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
+        Route::get('/getProductos/existencias/{name}', [MostrarProductosController::class, 'getProductosExistencias']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
