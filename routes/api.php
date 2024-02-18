@@ -70,6 +70,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
         Route::get('/index/cita/{id}', [CitaController::class, 'getCitaById']);
         Route::post('/store', [CitaController::class, 'store']);
+        Route::put('/update/status', [CitaController::class, 'updateStatus']);
 
     });
 
