@@ -17,6 +17,13 @@ class GenerarConsultaController extends Controller
         ]);
     }
 
+    public function tServicios(){
+        $data = DB::table('tservicios')->get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function store(Request $request){
         $validate = Validator::make($request->all(), [
             'id_cita' => 'required|exists:citas,id|integer',
