@@ -9,7 +9,7 @@ class Cita extends Model
 {
     use HasFactory;
 
-    protected $filleable = [
+    protected $fillable = [
         "user_regis",
         "fecha_registro",
         "fecha_cita",
@@ -17,6 +17,8 @@ class Cita extends Model
         "estatus",
         "motivo",
     ];
+
+    public $timestamps = false;
 
     protected $table = "citas";
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -65,7 +66,7 @@ class CitaController extends Controller
         return response()->json([
             'citas' => $citas
         ]);
-    
+
     }
 
     public function vaidacionFechas(){
@@ -79,7 +80,7 @@ class CitaController extends Controller
     public function store(Request $request){
         $validate = Validator::make($request->all(), [
             'user_regis' => 'required|exists:usuarios,id|integer',
-            'fecha_cita' => 'required|date',
+            'fecha_cita' => 'required|date|after:'.Carbon::now(),
             'id_mascota' => 'required|exists:animales,id|integer',
             'estatus' => 'required|string|max:50|min:4',
             'motivo' => 'required|string|max:255|min:4'
