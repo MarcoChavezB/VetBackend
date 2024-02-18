@@ -47,6 +47,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/getCategorias', [MostrarProductosController::class, 'getCategorias']);
         Route::post('/store', [MostrarProductosController::class, 'store']);
         Route::get('/existe/{name}', [MostrarProductosController::class, 'existencia']);
+        Route::get('/getProductoById/{id}', [MostrarProductosController::class, 'getProductoById']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
