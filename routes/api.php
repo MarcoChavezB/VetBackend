@@ -4,7 +4,9 @@ use App\Http\Controllers\CitaController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\TipoServicioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -73,6 +75,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/store', [MascotaController::class, 'store'])->name('store');
         Route::get('/index/{id}', [MascotaController::class, 'index'])->name('index')->where('id', '[0-9]+');
     });
+
+    Route::name('clientes.')->prefix('/clientes')->group(function () {
+        Route::post('/infoCorreo', [ClienteController::class, 'buscarPorCorreo'])->name('infoCorreo');
+        Route::post('/actualizar', [ClienteController::class, 'update'])->name('actualizar');
+        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');
+    });
+
+    Route::name('servicios.')->prefix('/servicios')->group(function () {
+        Route::get('/publicos', [TipoServicioController::class, 'serviciospublicos'])->name('publicos');
+        Route::get('/privados', [TipoServicioController::class, 'serviciosprivados'])->name('privados');
+        Route::get('/serviciospublicosesteticos', [TipoServicioController::class, 'serviciospublicosesteticos'])->name('serviciospublicosesteticos');
+        Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
+        Route::post('/publicarono', [TipoServicioController::class, 'publicarono'])->name('publicarono');
+    });
+
 
 
 
