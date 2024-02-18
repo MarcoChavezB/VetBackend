@@ -33,6 +33,24 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
+
+
+// aqui van las rutas sin logearse
+
+Route::name('unauthenticated.')->prefix('/unauthenticated')->name('unauthenticated')->group(function () {
+    Route::name('productos')->prefix('/productos')->group(function () {
+        Route::get('/venta', [MostrarProductosController::class, 'mostrarPorductosVenta']);
+        Route::get('/getProductoByName/{name}', [MostrarProductosController::class, 'getProductoByName']);
+
+    });
+
+    Route::name('servicios.')->prefix('/servicios')->group(function () {
+        Route::get('/serviciospublicosesteticos', [TipoServicioController::class, 'serviciospublicosesteticos'])->name('serviciospublicosesteticos');
+        Route::get('/serviciospublicosclinicos', [TipoServicioController::class, 'serviciospublicosclinicos'])->name('serviciospublicosclinicos');
+
+    });
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
@@ -98,7 +116,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::name('clientes.')->prefix('/clientes')->group(function () {
         Route::post('/infoCorreo', [ClienteController::class, 'buscarPorCorreo'])->name('infoCorreo');
         Route::post('/actualizar', [ClienteController::class, 'update'])->name('actualizar');
-        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');
+        Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');        
+        Route::post('/verificarcontraseña', [ClienteController::class, 'verificarcontraseña'])->name('verificarcontraseña');
     });
 
     Route::name('servicios.')->prefix('/servicios')->group(function () {
