@@ -12,7 +12,7 @@ class Producto extends Model
     
     protected $filleable = [
         "nom_producto", "descripcion", "precio_compra", "tipo_producto", 
-        "existencias", "precio_venta", "id_categoria", "imagen"
+        "existencias", "precio_venta", "id_categoria", "imagen", "disabled"
     ];
 
     public $timestamps = false;

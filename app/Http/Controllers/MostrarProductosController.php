@@ -140,7 +140,8 @@ class MostrarProductosController extends Controller
     }
 
     public function existencia($name){
-        $producto = Producto::where('nom_producto', $name)->first();
+        // busca el producto por nombre y el campo disabled este en 0
+        $producto = Producto::where('nom_producto', $name)->where('disabled', 0)->first();
 
         if(!$producto){
             return response()->json([
@@ -155,14 +156,18 @@ class MostrarProductosController extends Controller
 
 
     public function mostrarPorductosVenta(){
-        $productosVenta = Producto::where('tipo_producto', 'venta')->get();
+        // retorna los productos en venta con disabled en 0
+        $productosVenta = Producto::where('tipo_producto', 'venta')->where('disabled', 0)->get();
         return response()->json([
             'productos' => $productosVenta
         ]);
     }
 
     public function getProductoByName($name){
-        $producto = Producto::where('nom_producto', 'like', '%'.$name.'%')->where('tipo_producto', 'venta')->get(); 
+        $producto = Producto::where('nom_producto', 'like', '%'.$name.'%')
+        ->where('tipo_producto', 'venta')
+        ->where('disabled', 0)
+        ->get(); 
         return response()->json([
             'producto' => $producto
         ]);
@@ -176,6 +181,7 @@ class MostrarProductosController extends Controller
         ->selectRaw('(MAX(precio_venta) * 0.16) as iva')
         ->selectRaw("CASE WHEN MAX(existencias) <= 0 THEN 'Sin stock' ELSE 'Stock' END as estado")
         ->where('tipo_producto', 'venta')
+        ->where('disabled', 0)
         ->groupBy('id', 'nom_producto', 'descripcion', 'tipo_producto', 'imagen')
         ->get();
 
@@ -192,6 +198,7 @@ class MostrarProductosController extends Controller
         ->selectRaw('(MAX(precio_venta) * 0.16) as iva')
         ->selectRaw("CASE WHEN MAX(existencias) <= 0 THEN 'Sin stock' ELSE 'Stock' END as estado")
         ->where('tipo_producto', 'interno')
+        ->where('disabled', 0)
         ->groupBy('nom_producto', 'descripcion', 'tipo_producto')
         ->get();
 
@@ -209,6 +216,7 @@ class MostrarProductosController extends Controller
             ->selectRaw('(MAX(precio_venta) * 0.16) as iva')
             ->selectRaw("CASE WHEN MAX(existencias) <= 0 THEN 'Sin stock' ELSE 'Stock' END as estado")
             ->where('tipo_producto', 'venta')
+            ->where('disabled', 0)
             ->groupBy('id', 'nom_producto', 'descripcion', 'tipo_producto', 'imagen')
             ->get();
     
@@ -244,6 +252,7 @@ class MostrarProductosController extends Controller
             ->selectRaw('(MAX(precio_venta) * 0.16) as iva')
             ->selectRaw("CASE WHEN MAX(existencias) <= 0 THEN 'Sin stock' ELSE 'Stock' END as estado")
             ->where('tipo_producto', 'interno')
+            ->where('disabled', 0)
             ->groupBy('nom_producto', 'descripcion', 'tipo_producto')
             ->get();
 
