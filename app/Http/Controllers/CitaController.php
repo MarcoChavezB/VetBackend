@@ -144,8 +144,7 @@ class CitaController extends Controller
     public function citasPendientes(int $id){
         $citas = Cita::join('animales', 'citas.id_mascota', '=', 'animales.id')
             ->join('usuarios', 'citas.user_regis', '=', 'usuarios.id')
-            ->join('clientes', 'animales.propietario', '=', 'clientes.id')
-            ->select('citas.id', 'citas.fecha_cita as Fecha', 'citas.estatus as Estatus', 'citas.motivo as Motivo', 'animales.nombre as Nombre', 'clientes.nombre as cliente')
+            ->select('citas.id', 'citas.fecha_cita as Fecha', 'citas.estatus as Estatus', 'citas.motivo as Motivo', 'animales.nombre as Nombre', 'usuarios.nombre as cliente')
             ->where('user_regis', $id)
             ->where('estatus', 'Pendiente')
             ->get();
