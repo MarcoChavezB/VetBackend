@@ -44,6 +44,13 @@ class ReporteController extends Controller
         return response()->json([
             'data' => $resultados
         ]);
+    }
+
+    public function historialMascota(int $id){
+        $resultados = DB::select("CALL HistorialIDMascota(?)", array($id));
+        return response()->json([
+            'data' => $resultados
+        ]);
 
     }
 }
