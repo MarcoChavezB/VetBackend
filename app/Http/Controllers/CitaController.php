@@ -127,4 +127,20 @@ class CitaController extends Controller
             'data' => $cita
         ], 201);
     }
+
+    public function citasPendientes(int $id){
+        $citas = Cita::where('user_regis', $id)
+            ->where('estatus', 'Pendiente')
+            ->get();
+        if ($citas->isEmpty()) {
+            return response()->json([
+                'msg' => 'No hay citas pendientes'
+            ], 404);
+        }
+        return response()->json([
+            'msg' => 'Lista de citas pendientes',
+            'data' => $citas
+        ], 200);
+
+    }
 }
