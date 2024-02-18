@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/productoxcadena', [MostrarProductosController::class, 'productoporcadena'])->name('productoxcadena');
         Route::get('/getProductos/existencias/{name}', [MostrarProductosController::class, 'getProductosExistencias']);
         Route::post('/ventaProductos', [MostrarProductosController::class, 'ventaProductos']);
+        Route::get('/GenerarTiket', [MostrarProductosController::class, 'generarTiket']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {

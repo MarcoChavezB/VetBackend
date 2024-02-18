@@ -26,6 +26,15 @@ class MostrarProductosController extends Controller
     
     }
 
+    public function GenerarTiket(){
+        $venta = DB::select('Call GenerarReporteUltimaVenta()');
+
+        return response()->json([
+            'venta' => $venta
+        ]);
+    }
+
+    
     public function getProductosExistencias($name){
         $productos = DB::select("CALL ObtenerProductosPorNombreLimite(?)", [$name]);
 
