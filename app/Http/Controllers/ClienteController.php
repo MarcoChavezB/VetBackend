@@ -67,5 +67,28 @@ class ClienteController extends Controller
         };
         return response()->json($user);
     }
+
+    public function verificarcontraseña(Request $request){
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['msg' => 'Usuario no encontrado'], 404);
+        };
+        
+        $request->validate([
+            'contra' => 'required', 
+        ]);
+
+        $contraseña = $request->contra;
+        $hashedPassword = $user->contra;
+
+        if (Hash::check($contraseña, $hashedPassword)) {
+            return response()->json(['status' => true], 200);
+        } else {
+            return response()->json(['status' => false], 200);
+        }
+        
+    }
+    
     
 }
