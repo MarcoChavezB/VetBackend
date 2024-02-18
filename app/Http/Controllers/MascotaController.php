@@ -51,6 +51,6 @@ class MascotaController extends Controller
         return response()->json([
             'msg' => 'Lista de mascotas',
             'data' => $mascotas
-        ]);
+        ], 201);
     }
 }

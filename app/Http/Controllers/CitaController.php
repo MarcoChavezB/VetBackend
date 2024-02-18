@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,7 @@ class CitaController extends Controller
     }
 
     public function getCitaById($id){
-        $cita = DB::select("SELECT 
+        $cita = DB::select("SELECT
         citas.id,
         citas.motivo,
         clientes.nombre,
@@ -44,7 +45,7 @@ class CitaController extends Controller
         animales.raza
         FROM citas
             INNER JOIN animales ON animales.id = citas.id_mascota
-            INNER JOIN clientes ON clientes.id = animales.propietario   
+            INNER JOIN clientes ON clientes.id = animales.propietario
         WHERE citas.id = :cita_id",
         ['cita_id' => $id,]);
 
@@ -99,7 +100,7 @@ class CitaController extends Controller
         return response()->json([
             'citas' => $citas
         ]);
-    
+
     }
 
     public function vaidacionFechas(){
@@ -113,7 +114,7 @@ class CitaController extends Controller
     public function store(Request $request){
         $validate = Validator::make($request->all(), [
             'user_regis' => 'required|exists:usuarios,id|integer',
-            'fecha_cita' => 'required|date',
+            'fecha_cita' => 'required|date|after:'.Carbon::now(),
             'id_mascota' => 'required|exists:animales,id|integer',
             'estatus' => 'required|string|max:50|min:4',
             'motivo' => 'required|string|max:255|min:4'
@@ -137,6 +138,6 @@ class CitaController extends Controller
         return response()->json([
             'msg' => 'Cita registrada correctamente',
             'data' => $cita
-        ]);
+        ], 201);
     }
 }
