@@ -93,7 +93,7 @@ class CitaController extends Controller
     }
 
     public function citasTotalHoy(){
-        $citas = Cita::whereDate('fecha_cita', now())->get();
+        $citas = Cita::whereDate('fecha_cita', now())->count();
         return response()->json([
             'citas' => $citas
         ]);
