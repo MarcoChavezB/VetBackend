@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
+
+    public function getAdministradores(){
+        $usuarios = Usuario::select('id', 'nombre', 'apellido', 'correo', 'telefono1', 'telefono2', 'tipo_usuario')->where('tipo_usuario', 'Administrador')->get();
+        if ($usuarios->isEmpty()) {
+            return response()->json([
+                'msg' => 'No hay administradores registrados'
+            ], 404);
+        }
+        return response()->json([
+            'administradores' => $usuarios
+        ], 201);
+    }
     public function registro(Request $request){
         $validate = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255|min:4',
