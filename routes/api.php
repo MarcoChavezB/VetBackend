@@ -4,6 +4,7 @@ use App\Http\Controllers\CitaController;
 use App\Http\Controllers\GenerarConsultaController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\MostrarProductosController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
@@ -138,6 +139,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/calcularCostoDetallado', [GenerarConsultaController::class, 'calcularCostoDetallado'])->name('calcularCostoDetallado');
         Route::post('/buscarServicios', [GenerarConsultaController::class, 'buscarServicios'])->name('buscarServicios');
         Route::post('/generarConsultasCliente', [GenerarConsultaController::class, 'generarConsultaCliente'])->name('generarConsultasCliente');
+        Route::post('/reporteConsultas', [ReporteController::class, 'reporteConsultas'])->name('reporteConsultas');
+        Route::post('/reporteConsultas/fecha', [ReporteController::class, 'reporteConsultasFecha'])->name('reporteConsultasFecha');
+
     });
 
 });
