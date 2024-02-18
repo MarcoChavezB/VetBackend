@@ -12,6 +12,19 @@ use Illuminate\Support\Facades\Validator;
 
 class CitaController extends Controller
 {
+    public function updateStatus(Request $request){
+        $data = $request->all();
+        $id = $data['cita_id'];
+        $estatus = $data['cita_respuesta'];
+
+        DB::select('Call cambiar_estatus_cita(?, ?)', [$id, $estatus]);
+
+        return response()->json([
+            'msg' => 'Estatus de la cita actualizado correctamente'
+        ]);
+    }
+
+
     public function getCitasProximas(){
         $citas = Cita::whereBetween('fecha_cita', [now(), now()->addDays(2)])
         ->get();
@@ -144,3 +157,5 @@ class CitaController extends Controller
 
     }
 }
+
+
