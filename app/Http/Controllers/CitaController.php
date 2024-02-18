@@ -147,6 +147,7 @@ class CitaController extends Controller
             ->select('citas.id', 'citas.fecha_cita as Fecha', 'citas.estatus as Estatus', 'citas.motivo as Motivo', 'animales.nombre as Nombre', 'usuarios.nombre as cliente')
             ->where('user_regis', $id)
             ->where('estatus', 'Pendiente')
+            ->orWhere('estatus', 'Aceptada')
             ->get();
         if ($citas->isEmpty()) {
             return response()->json([
