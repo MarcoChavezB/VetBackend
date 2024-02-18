@@ -157,7 +157,24 @@ class CitaController extends Controller
             'msg' => 'Lista de citas pendientes',
             'data' => $citas
         ], 200);
+    }
 
+    public function citasRechazadas(int $id){
+        $citas = Cita::join('animales', 'citas.id_mascota', '=', 'animales.id')
+            ->join('usuarios', 'citas.user_regis', '=', 'usuarios.id')
+            ->select('citas.id', 'citas.fecha_cita as Fecha', 'citas.estatus as Estatus', 'citas.motivo as Motivo', 'animales.nombre as Nombre', 'usuarios.nombre as cliente')
+            ->where('user_regis', $id)
+            ->where('estatus', 'Rechazada')
+            ->get();
+        if ($citas->isEmpty()) {
+            return response()->json([
+                'msg' => 'No hay citas rechazadas'
+            ], 404);
+        }
+        return response()->json([
+            'msg' => 'Lista de citas rechazadas',
+            'data' => $citas
+        ], 200);
     }
 }
 

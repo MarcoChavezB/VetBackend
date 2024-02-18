@@ -72,6 +72,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/store', [CitaController::class, 'store']);
         Route::put('/update/status', [CitaController::class, 'updateStatus']);
         Route::get('/citasPendientes/{id}', [CitaController::class, 'citasPendientes'])->where('id', '[0-9]+');
+        Route::get('/citasRechazadas/{id}', [CitaController::class, 'citasRechazadas'])->where('id', '[0-9]+');
 
     });
 
