@@ -217,6 +217,34 @@ class CitaController extends Controller
             'data' => $citas
         ], 200);
     }
+
+
+    public function CrearRegistroVeterinario(Request $request) {
+        $params = [
+            'userregis'       => $request->userregis,
+            'p_nombre'        => $request->nombre,
+            'p_apellido'      => $request->apellido,
+            'p_telefono1'     => $request->telefono1,
+            'p_telefono2'     => $request->telefono2,
+            'p_nombre_animal' => $request->nombre_animal,
+            'p_especie'       => $request->especie,
+            'p_raza'          => $request->raza,
+            'p_genero'        => $request->genero,
+            'p_fecha_cita'    => $request->fecha_cita,
+            'p_estatus'       => $request->estatus,
+            'p_motivo'        => $request->motivo,
+        ];
+    
+        try {
+            $resultados = DB::select('CALL CrearRegistroVeterinario(:userregis, :p_nombre, :p_apellido, :p_telefono1, :p_telefono2, :p_nombre_animal, :p_especie, :p_raza, :p_genero, :p_fecha_cita, :p_estatus, :p_motivo)', $params);
+    
+            return response()->json(['success' => true, 'data' => $resultados], 200);
+    
+        } catch (\PDOException $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+        }
+    }
+    
 }
 
 

@@ -109,12 +109,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/citasProximas', [CitaController::class, 'citasProximas']);
         Route::post('/citasRechazadas', [GenerarConsultaController::class, 'reporteCitasRechazadasCliente']);
         Route::post('/citasRechazadas/fecha', [GenerarConsultaController::class, 'reporteCitasRechazadasFecha']);
-
+        Route::post('/citalocal', [CitaController::class, 'CrearRegistroVeterinario'])->name('citalocal');
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
         Route::post('/store', [MascotaController::class, 'store'])->name('store');
         Route::get('/index/{id}', [MascotaController::class, 'index'])->name('index')->where('id', '[0-9]+');
+        Route::post('/MascotasUsuario', [MascotaController::class, 'mascotasxusuario'])->name('MascotasUsuario');
+
     });
 
     Route::name('clientes.')->prefix('/clientes')->group(function () {
@@ -122,6 +124,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/actualizar', [ClienteController::class, 'update'])->name('actualizar');
         Route::get('/infoID', [ClienteController::class, 'obtenerClientePorID'])->name('infoID');
         Route::post('/verificarcontraseña', [ClienteController::class, 'verificarcontraseña'])->name('verificarcontraseña');
+        Route::post('/validartelefonobd', [ClienteController::class, 'validarTelefono'])->name('validartelefonobd');
+
     });
 
     Route::name('servicios.')->prefix('/servicios')->group(function () {

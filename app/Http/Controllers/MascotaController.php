@@ -53,4 +53,16 @@ class MascotaController extends Controller
             'data' => $mascotas
         ], 201);
     }
+
+    public function mascotasxusuario(Request $request) {
+
+        $id_cliente = $request->input('id_cliente'); 
+
+        if (!$id_cliente) {
+            return response()->json([]);
+        }
+        $results = DB::select('CALL MascotasUsuario(:id_cliente)', ['id_cliente' => $id_cliente]);
+
+        return response()->json($results);
+    }
 }
