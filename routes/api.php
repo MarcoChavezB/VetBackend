@@ -31,7 +31,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
     Route::post('/registro', [UsuarioController::class, 'registro'])->name('registro');
     Route::post('/login', [UsuarioController::class, 'login'])->name('login');
 });
-Route::middleware(['auth:sanctum'])->group(function () {
+//Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function () {
         Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/getCategorias', [MostrarProductosController::class, 'getCategorias']);
         Route::post('/store', [MostrarProductosController::class, 'store']);
         Route::get('/existe/{name}', [MostrarProductosController::class, 'existencia']);
+        Route::get('/getProductoById/{id}', [MostrarProductosController::class, 'getProductoById']);
     });
 
     Route::name('ventas')->prefix('/ventas')->group(function () {
@@ -67,7 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
         Route::post('/store', [MascotaController::class, 'store']);
     });
-});
+//});
 
 
 

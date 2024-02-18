@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\DB;
 class MostrarProductosController extends Controller
 {
 
+    public function getProductoById($id){
+        $producto = Producto::find($id);
+        $categoria = Categoria::find($producto->id_categoria);
+
+        return response()->json([
+            'producto' => $producto,
+            'categoria' => $categoria
+        ]);
+    }
+
     public function store(Request $request){
         $data = $request->all();
 
