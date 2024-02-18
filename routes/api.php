@@ -67,6 +67,7 @@ Route::name('usuarios.')->prefix('/usuario')->name('usuario')->group(function ()
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
+        Route::post('/store', [CitaController::class, 'store']);
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {
