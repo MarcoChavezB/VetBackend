@@ -61,4 +61,24 @@ class GenerarConsultaController extends Controller
         ], 201);
 
     }
+
+    public function calcularCostoDetallado(Request $request){
+        $validate = Validator::make($request->all(), [
+            'services' => 'required|array',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $ids = implode(',', $request->services);
+
+        $resultados = DB::select("CALL calcularCostoDetallado(?)", array($ids));
+
+        return response()->json([
+            'data' => $resultados
+        ]);
+    }
 }

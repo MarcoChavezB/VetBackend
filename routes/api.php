@@ -116,6 +116,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/generarConsultas', [GenerarConsultaController::class, 'generarConsultas'])->name('generarConsulta');
         Route::post('/store', [GenerarConsultaController::class, 'store'])->name('store');
         Route::get('/tServicios', [GenerarConsultaController::class, 'tServicios'])->name('tServicios');
+        Route::post('/calcularCostoDetallado', [GenerarConsultaController::class, 'calcularCostoDetallado'])->name('calcularCostoDetallado');
     });
 
 });
