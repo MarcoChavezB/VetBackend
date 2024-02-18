@@ -7,6 +7,7 @@ use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CitaController extends Controller
 {
@@ -93,6 +94,36 @@ class CitaController extends Controller
 
         return response()->json([
             'data' => $fechas
+        ]);
+    }
+
+    public function store(Request $request){
+        $validate = Validator::make($request->all(), [
+            'user_regis' => 'required|exists:usuarios,id|integer',
+            'fecha_cita' => 'required|date',
+            'id_mascota' => 'required|exists:animales,id|integer',
+            'estatus' => 'required|string|max:50|min:4',
+            'motivo' => 'required|string|max:255|min:4'
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $cita = new Cita();
+        $cita->user_regis = $request->user_regis;
+        $cita->fecha_registro = date('Y-m-d H:i:s');
+        $cita->fecha_cita = $request->fecha_cita;
+        $cita->id_mascota = $request->id_mascota;
+        $cita->estatus = $request->estatus;
+        $cita->motivo = $request->motivo;
+        $cita->save();
+
+        return response()->json([
+            'msg' => 'Cita registrada correctamente',
+            'data' => $cita
         ]);
     }
 }

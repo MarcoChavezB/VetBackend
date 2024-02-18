@@ -69,7 +69,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
         Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
         Route::get('/index/cita/{id}', [CitaController::class, 'getCitaById']);
-        
+        Route::post('/store', [CitaController::class, 'store']);
+
     });
 
     Route::name('mascotas.')->prefix('/mascotas')->group(function () {

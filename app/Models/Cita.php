@@ -10,8 +10,6 @@ class Cita extends Model
     use HasFactory;
 
     protected $filleable = [
-
-        "id",
         "user_regis",
         "fecha_registro",
         "fecha_cita",
