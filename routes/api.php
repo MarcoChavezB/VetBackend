@@ -67,7 +67,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/graph/getPorcentaje', [CitaController::class, 'getPorcentajeCitas']);
         Route::get('/index', [CitaController::class, 'index']);
         Route::get('/validacionFechas', [CitaController::class, 'vaidacionFechas']);
-        Route::post('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
+        Route::get('/index/getCitasHoy', [CitaController::class, 'getCitasHoy']);
         
     });
 
