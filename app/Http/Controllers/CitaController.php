@@ -21,7 +21,7 @@ class CitaController extends Controller
     }
 
     public function getCitaById($id){
-        $cita = DB::select("SELECT 
+        $cita = DB::select("SELECT
         citas.id,
         citas.motivo,
         clientes.nombre,
@@ -32,7 +32,7 @@ class CitaController extends Controller
         animales.raza
         FROM citas
             INNER JOIN animales ON animales.id = citas.id_mascota
-            INNER JOIN clientes ON clientes.id = animales.propietario   
+            INNER JOIN clientes ON clientes.id = animales.propietario
         WHERE citas.id = :cita_id",
         ['cita_id' => $id,]);
 
@@ -125,6 +125,6 @@ class CitaController extends Controller
         return response()->json([
             'msg' => 'Cita registrada correctamente',
             'data' => $cita
-        ]);
+        ], 201);
     }
 }
