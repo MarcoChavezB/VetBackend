@@ -49,9 +49,9 @@ class TipoServicioController extends Controller
         try {
             $resultados = DB::select("SELECT * FROM vista_servicios_publicos");
 
-            return response()->json(
-                $resultados
-            );
+            return response()->json([
+                'data' => $resultados
+            ]);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -65,9 +65,9 @@ class TipoServicioController extends Controller
         try {
             $resultados = DB::select("SELECT * FROM vista_servicios_nopublicos");
 
-            return response()->json(
-                $resultados
-            );
+            return response()->json([
+                'data' => $resultados
+            ]);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -81,9 +81,9 @@ class TipoServicioController extends Controller
         try {
             $resultados = DB::select("SELECT * FROM vista_servicios_publicos_esteticos");
 
-            return response()->json(
-                $resultados
-            );
+            return response()->json([
+                'data' => $resultados
+            ]);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -97,9 +97,9 @@ class TipoServicioController extends Controller
         try {
             $resultados = DB::select("SELECT * FROM vista_servicios_publicos_clinicos");
 
-            return response()->json(
-                $resultados
-            );
+            return response()->json([
+                'data' => $resultados
+            ]);
 
         } catch (\Exception $e) {
             return response()->json([
