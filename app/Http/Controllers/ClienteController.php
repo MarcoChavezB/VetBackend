@@ -89,6 +89,20 @@ class ClienteController extends Controller
         }
         
     }
+    public function validarTelefono(Request $request) {
+    
+        $existe = User::where('telefono1', $request->telefono)
+                      ->orWhere('telefono2', $request->telefono)
+                      ->exists();
+    
+        if ($existe) {
+            // Si el teléfono ya existe, regresar 'false'
+            return response()->json(['valido' => false], 200);
+        } else {
+            // Si el teléfono no existe, regresar 'true'
+            return response()->json(['valido' => true], 200);
+        }
+    }
     
     
 }
