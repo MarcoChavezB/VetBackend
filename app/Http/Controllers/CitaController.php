@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
+use App\Mail\CitaAgendada;
 use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class CitaController extends Controller
@@ -174,6 +177,50 @@ class CitaController extends Controller
         $cita->motivo = $request->motivo;
         $cita->save();
 
+        $admins = DB::table('usuarios')->where('tipo_usuario', 'Administrador')->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin->correo)->send(new CitaAgendada($admin));
+        }
+
+        return response()->json([
+            'msg' => 'Cita registrada correctamente',
+            'data' => $cita
+        ], 201);
+    }
+
+    public function store_mail(Request $request){
+        $validate = Validator::make($request->all(), [
+            'user_regis' => 'required|exists:usuarios,id|integer',
+            'fecha_cita' => 'required|date|after:'.Carbon::now(),
+            'id_mascota' => 'required|exists:animales,id|integer',
+            'estatus' => 'required|string|max:50|min:4',
+            'motivo' => 'required|string|max:255|min:4'
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'errors' => $validate->errors()
+            ], 400);
+        }
+
+        $user = Auth::user();
+
+        $cita = new Cita();
+        $cita->user_regis = $request->user_regis;
+        $cita->fecha_registro = date('Y-m-d H:i:s');
+        $cita->fecha_cita = $request->fecha_cita;
+        $cita->id_mascota = $request->id_mascota;
+        $cita->estatus = $request->estatus;
+        $cita->motivo = $request->motivo;
+        $cita->save();
+
+        $admins = DB::table('usuarios')->where('tipo_usuario', 'Administrador')->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin->correo)->send(new CitaAgendada($admin));
+        }
+        $user = Auth::user();
+        Mail::to($user->correo)->send(new CitaAgendada($user));
+
         return response()->json([
             'msg' => 'Cita registrada correctamente',
             'data' => $cita
@@ -237,17 +284,17 @@ class CitaController extends Controller
             'p_estatus'       => $request->estatus,
             'p_motivo'        => $request->motivo,
         ];
-    
+
         try {
             $resultados = DB::select('CALL CrearRegistroVeterinario(:userregis, :p_nombre, :p_apellido, :p_telefono1, :p_telefono2, :p_nombre_animal, :p_especie, :p_raza, :p_genero, :p_fecha_cita, :p_estatus, :p_motivo)', $params);
-    
+
             return response()->json(['success' => true, 'data' => $resultados], 200);
-    
+
         } catch (\PDOException $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
-    
+
 }
 
 
