@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-
 use App\Mail\CitaAgendada;
 use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
