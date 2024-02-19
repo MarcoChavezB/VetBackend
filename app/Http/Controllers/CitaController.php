@@ -190,45 +190,6 @@ class CitaController extends Controller
         ], 201);
     }
 
-    public function store_mail(Request $request){
-        $validate = Validator::make($request->all(), [
-            'user_regis' => 'required|exists:usuarios,id|integer',
-            'fecha_cita' => 'required|date|after:'.Carbon::now(),
-            'id_mascota' => 'required|exists:animales,id|integer',
-            'estatus' => 'required|string|max:50|min:4',
-            'motivo' => 'required|string|max:255|min:4'
-        ]);
-
-        if($validate->fails()){
-            return response()->json([
-                'errors' => $validate->errors()
-            ], 400);
-        }
-
-        $user = Auth::user();
-
-        $cita = new Cita();
-        $cita->user_regis = $request->user_regis;
-        $cita->fecha_registro = date('Y-m-d H:i:s');
-        $cita->fecha_cita = $request->fecha_cita;
-        $cita->id_mascota = $request->id_mascota;
-        $cita->estatus = $request->estatus;
-        $cita->motivo = $request->motivo;
-        $cita->save();
-
-        $admins = DB::table('usuarios')->where('tipo_usuario', 'Administrador')->get();
-        foreach ($admins as $admin) {
-            Mail::to($admin->correo)->send(new CitaAgendada($admin));
-        }
-        $user = Auth::user();
-        Mail::to($user->correo)->send(new CitaAgendada($user));
-
-        return response()->json([
-            'msg' => 'Cita registrada correctamente',
-            'data' => $cita
-        ], 201);
-    }
-
     public function citasPendientes(int $id){
         $citas = Cita::join('animales', 'citas.id_mascota', '=', 'animales.id')
             ->join('usuarios', 'citas.user_regis', '=', 'usuarios.id')
@@ -270,12 +231,12 @@ class CitaController extends Controller
 
 
 
-  
+
     public function CrearRegistroVeterinario(Request $request) {
         $user = Auth::user();
-    
+
         DB::beginTransaction();
-    
+
         try {
             $nuevoUsuario = User::create([
                 'nombre' => $request->nombre,
@@ -284,7 +245,7 @@ class CitaController extends Controller
                 'telefono2' => $request->telefono2,
             ]);
             $local_cliente_id = $nuevoUsuario->id;
-    
+
             $nuevoAnimal = new Animal([
                 'nombre' => $request->nombre_animal,
                 'propietario' => $local_cliente_id,
@@ -293,7 +254,7 @@ class CitaController extends Controller
                 'genero' => $request->genero,
             ]);
             $nuevoAnimal->save();
-    
+
             $nuevaCita = new Cita([
                 'user_regis' => $user->id,
                 'fecha_registro' => now(),
@@ -303,9 +264,9 @@ class CitaController extends Controller
                 'motivo' => $request->motivo,
             ]);
             $nuevaCita->save();
-    
+
             DB::commit();
-    
+
             return response()->json([
                 'success' => true,
                 'data' => [
@@ -314,13 +275,13 @@ class CitaController extends Controller
                     'cita_id' => $nuevaCita->id,
                 ]
             ], 200);
-    
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
-    
+
 
 }
 
