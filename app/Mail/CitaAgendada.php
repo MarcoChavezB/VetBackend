@@ -30,7 +30,7 @@ class CitaAgendada extends Mailable
     {
         $text = 'Hola, ' . $this->user->nombre . '. Tienes una nueva cita agendada.';
         return $this->subject('Cita Agendada')
-            ->body($text);
+        ->view('msg.blade.php', ['text' => $text]);
     }
 
 
