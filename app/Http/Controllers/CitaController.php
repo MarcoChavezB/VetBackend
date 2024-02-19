@@ -309,7 +309,7 @@ class CitaController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => [
-                    'cliente_id' => $user->id,
+                    'cliente_id' => $local_cliente_id,
                     'animal_id' => $nuevoAnimal->id,
                     'cita_id' => $nuevaCita->id,
                 ]
