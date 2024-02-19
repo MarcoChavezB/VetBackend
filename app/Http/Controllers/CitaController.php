@@ -155,7 +155,6 @@ class CitaController extends Controller
 
     public function store(Request $request){
         $validate = Validator::make($request->all(), [
-            'user_regis' => 'required|exists:usuarios,id|integer',
             'fecha_cita' => 'required|date|after:'.Carbon::now(),
             'id_mascota' => 'required|exists:animales,id|integer',
             'estatus' => 'required|string|max:50|min:4',
@@ -167,9 +166,10 @@ class CitaController extends Controller
                 'errors' => $validate->errors()
             ], 400);
         }
+        $user = Auth::user();
 
         $cita = new Cita();
-        $cita->user_regis = $request->user_regis;
+        $cita->user_regis = $user->id;
         $cita->fecha_registro = date('Y-m-d H:i:s');
         $cita->fecha_cita = $request->fecha_cita;
         $cita->id_mascota = $request->id_mascota;
@@ -181,7 +181,7 @@ class CitaController extends Controller
         foreach ($admins as $admin) {
             Mail::to($admin->correo)->send(new CitaAgendada($admin));
         }
-        $user = Auth::user();
+        
         Mail::to($user->correo)->send(new CitaAgendada($user));
 
         return response()->json([
