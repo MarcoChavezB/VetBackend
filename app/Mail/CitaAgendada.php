@@ -28,8 +28,11 @@ class CitaAgendada extends Mailable
      */
     public function build()
     {
+        $text = 'Hola, ' . $this->user->nombre . '. Tienes una nueva cita agendada.';
         return $this->subject('Cita Agendada')
-            ->line('Hola, ' . $this->user->nombre)
-            ->line('Tienes una nueva cita agendada.');
+        ->view('msg.blade.php', ['text' => $text]);
     }
+
+
+
 }

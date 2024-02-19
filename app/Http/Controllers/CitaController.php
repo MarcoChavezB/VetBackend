@@ -181,6 +181,8 @@ class CitaController extends Controller
         foreach ($admins as $admin) {
             Mail::to($admin->correo)->send(new CitaAgendada($admin));
         }
+        $user = Auth::user();
+        Mail::to($user->correo)->send(new CitaAgendada($user));
 
         return response()->json([
             'msg' => 'Cita registrada correctamente',
