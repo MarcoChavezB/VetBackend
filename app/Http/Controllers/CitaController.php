@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Cita;
 use App\Models\PorcentajeCrecimientoCitas;
@@ -220,8 +221,10 @@ class CitaController extends Controller
 
 
     public function CrearRegistroVeterinario(Request $request) {
+
+        $user = Auth::user();
         $params = [
-            'userregis'       => $request->userregis,
+            'userregis'       => $user->id,
             'p_nombre'        => $request->nombre,
             'p_apellido'      => $request->apellido,
             'p_telefono1'     => $request->telefono1,
