@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Mail\CitaAgendada;
 use App\Models\Cita;
+use App\Models\User;
+use App\Models\Animal;
 use App\Models\PorcentajeCrecimientoCitas;
 use App\Models\Producto;
 use Carbon\Carbon;
@@ -265,33 +267,58 @@ class CitaController extends Controller
     }
 
 
+
+  
     public function CrearRegistroVeterinario(Request $request) {
-
         $user = Auth::user();
-        $params = [
-            'userregis'       => $user->id,
-            'p_nombre'        => $request->nombre,
-            'p_apellido'      => $request->apellido,
-            'p_telefono1'     => $request->telefono1,
-            'p_telefono2'     => $request->telefono2,
-            'p_nombre_animal' => $request->nombre_animal,
-            'p_especie'       => $request->especie,
-            'p_raza'          => $request->raza,
-            'p_genero'        => $request->genero,
-            'p_fecha_cita'    => $request->fecha_cita,
-            'p_estatus'       => $request->estatus,
-            'p_motivo'        => $request->motivo,
-        ];
-
+    
+        DB::beginTransaction();
+    
         try {
-            $resultados = DB::select('CALL CrearRegistroVeterinario(:userregis, :p_nombre, :p_apellido, :p_telefono1, :p_telefono2, :p_nombre_animal, :p_especie, :p_raza, :p_genero, :p_fecha_cita, :p_estatus, :p_motivo)', $params);
-
-            return response()->json(['success' => true, 'data' => $resultados], 200);
-
-        } catch (\PDOException $e) {
+            $nuevoUsuario = User::create([
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
+                'telefono1' => $request->telefono1,
+                'telefono2' => $request->telefono2,
+            ]);
+            $local_cliente_id = $nuevoUsuario->id;
+    
+            $nuevoAnimal = new Animal([
+                'nombre' => $request->nombre_animal,
+                'propietario' => $local_cliente_id,
+                'especie' => $request->especie,
+                'raza' => $request->raza,
+                'genero' => $request->genero,
+            ]);
+            $nuevoAnimal->save();
+    
+            $nuevaCita = new Cita([
+                'user_regis' => $user->id,
+                'fecha_registro' => now(),
+                'fecha_cita' => $request->fecha_cita,
+                'id_mascota' => $nuevoAnimal->id,
+                'estatus' => $request->estatus,
+                'motivo' => $request->motivo,
+            ]);
+            $nuevaCita->save();
+    
+            DB::commit();
+    
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'cliente_id' => $user->id,
+                    'animal_id' => $nuevoAnimal->id,
+                    'cita_id' => $nuevaCita->id,
+                ]
+            ], 200);
+    
+        } catch (\Exception $e) {
+            DB::rollback();
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
+    
 
 }
 
