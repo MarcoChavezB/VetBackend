@@ -9,7 +9,7 @@ class Animal extends Model
 {
     use HasFactory;
 
-    protected $filleable = [
+    protected $fillable = [
         "nombre",
         "propietario",
         "especie",
