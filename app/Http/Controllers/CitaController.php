@@ -180,8 +180,6 @@ class CitaController extends Controller
         foreach ($admins as $admin) {
             Mail::to($admin->correo)->send(new CitaAgendada($admin));
         }
-        $user = Auth::user();
-        Mail::to($user->correo)->send(new CitaAgendada($user));
 
         return response()->json([
             'msg' => 'Cita registrada correctamente',
@@ -283,17 +281,17 @@ class CitaController extends Controller
             'p_estatus'       => $request->estatus,
             'p_motivo'        => $request->motivo,
         ];
-    
+
         try {
             $resultados = DB::select('CALL CrearRegistroVeterinario(:userregis, :p_nombre, :p_apellido, :p_telefono1, :p_telefono2, :p_nombre_animal, :p_especie, :p_raza, :p_genero, :p_fecha_cita, :p_estatus, :p_motivo)', $params);
-    
+
             return response()->json(['success' => true, 'data' => $resultados], 200);
-    
+
         } catch (\PDOException $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
-    
+
 }
 
 
