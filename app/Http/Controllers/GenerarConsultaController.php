@@ -18,7 +18,7 @@ class GenerarConsultaController extends Controller
     }
 
     public function tServicios(){
-        $data = DB::table('tservicios')->get();
+        $data = DB::table('tipos_servicios')->get();
         return response()->json([
             'data' => $data
         ]);
@@ -112,7 +112,7 @@ class GenerarConsultaController extends Controller
             ], 400);
         }
 
-        $servicios = DB::table('tservicios')
+        $servicios = DB::table('tipos_servicios')
             ->select('id', 'nombre_TServicio')
             ->where('nombre_TServicio', 'like', '%'.$request->nombre.'%')
             ->get();
