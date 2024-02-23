@@ -148,6 +148,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/reporteConsultas', [ReporteController::class, 'reporteConsultas'])->name('reporteConsultas');
         Route::post('/reporteConsultas/fecha', [ReporteController::class, 'reporteConsultasFecha'])->name('reporteConsultasFecha');
         Route::post('/historialMascota/{id}', [ReporteController::class, 'historialMascota'])->name('historialMascota')->where('id', '[0-9]+');
+        Route::post('/buscarCitasCliente', [GenerarConsultaController::class, 'buscarCitasCliente'])->name('buscarCitasCliente');
 
     });
 

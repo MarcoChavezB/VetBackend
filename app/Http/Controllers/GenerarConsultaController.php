@@ -128,6 +128,27 @@ class GenerarConsultaController extends Controller
         ], 201);
     }
 
+    public function buscarCitasCliente(Request $request)
+    {
+        $nombreCompleto = $request->input('nombre');
+        $nombre = explode(' ', trim($nombreCompleto))[0];
+        $apellido = substr($nombreCompleto, strlen($nombre) + 1);
+
+        $resultados = DB::table('citas as ci')
+            ->select('ci.id', 'a.nombre as Nombre', 'a.especie as Especie', 'a.raza as Raza', 'a.genero as Genero', DB::raw("CONCAT(u.nombre, ' ', ' ', u.apellido) as Dueño"), 'ci.fecha_cita as Fecha', 'ci.motivo as Motivo')
+            ->leftJoin('animales as a', 'a.id', '=', 'ci.id_mascota')
+            ->leftJoin('consultas as co', 'ci.id', '=', 'co.id_cita')
+            ->leftJoin('usuarios as u', 'a.propietario', '=', 'u.id')
+            ->where('ci.estatus', 'Aceptada')
+            ->where('u.nombre', 'like', '%' . $nombre . '%')
+            ->where('u.apellido', 'like', '%' . $apellido . '%')
+            ->groupBy('ci.id', 'a.nombre', 'a.especie', 'a.raza', 'a.genero', DB::raw("CONCAT(u.nombre, ' ', ' ', u.apellido)"), 'ci.fecha_cita', 'ci.motivo')
+            ->get();
+
+        return $resultados;
+    }
+
+
     public function reporteCitasRechazadasCliente(Request $request){
         $validate = Validator::make($request->all(), [
             'Nombre' => 'required|string',
